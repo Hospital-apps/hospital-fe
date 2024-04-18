@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/ConsultationScreen.dart';
 
 class ScreenSatu extends StatelessWidget {
   @override
@@ -37,18 +38,29 @@ class ScreenSatu extends StatelessWidget {
               children: [
                 NavIconButton(
                   iconPath: 'assets/img/doctor.png',
-                  onPressed: () {},
+                  label: 'Consultation',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Consultation()), // Ganti DoctorPage dengan halaman yang sesuai
+                    );
+                  },
                 ),
                 NavIconButton(
                   iconPath: 'assets/img/examination.png',
+                  label: 'Medical Checkup',
                   onPressed: () {},
                 ),
                 NavIconButton(
                   iconPath: 'assets/img/schedule.png',
+                  label: 'Doctor Schedule',
                   onPressed: () {},
                 ),
                 NavIconButton(
                   iconPath: 'assets/img/ambulance.png',
+                  label: 'Ambulance',
                   onPressed: () {},
                 ),
               ],
@@ -123,6 +135,7 @@ class NavIconButton extends StatelessWidget {
   const NavIconButton({
     required this.iconPath,
     required this.onPressed,
+    required String label,
   });
 
   @override
