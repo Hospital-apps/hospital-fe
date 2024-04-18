@@ -8,7 +8,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 4,
       vsync: this,
     );
