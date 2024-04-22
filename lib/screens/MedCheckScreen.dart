@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MedCheck extends StatefulWidget {
-  const MedCheck({super.key});
+class MedicalCheckupScreen extends StatefulWidget {
+  const MedicalCheckupScreen({super.key});
 
   @override
-  State<MedCheck> createState() => MedCheckState();
+  State<MedicalCheckupScreen> createState() => MedCheckState();
 }
 
-class MedCheckState extends State<MedCheck> {
+class MedCheckState extends State<MedicalCheckupScreen> {
   bool isChecked = false;
 
   @override
@@ -16,7 +16,7 @@ class MedCheckState extends State<MedCheck> {
         appBar: AppBar(
           title: Text('Medical Checkup'),
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Row(
@@ -34,7 +34,7 @@ class MedCheckState extends State<MedCheck> {
               ],
             ),
             Image.asset(
-              'assets/ads1.png',
+              'assets/img/package1.jpg',
               width: 500,
               height: 250,
             ),
@@ -53,7 +53,7 @@ class MedCheckState extends State<MedCheck> {
               ],
             ),
             Image.asset(
-              'assets/ads2.png',
+              'assets/img/package2.jpg',
               width: 500,
               height: 250,
             ),

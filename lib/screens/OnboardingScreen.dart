@@ -53,7 +53,7 @@ class OnboardingScreen extends StatelessWidget {
                   height: 320,
                 ),
                 Text(
-                  'Description Text 1',
+                  'Xiaozhuang Hospital',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'A hospital is a health care institution providing patient treatment with specialized medical and nursing staff and medical equipment. The best hospitals have state-of-the-art medical technology, highly trained doctors and healthcare professionals, and excellent patient care services.',
+                  'Welcome to Xiaozhuang Hospital.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),
@@ -76,7 +76,7 @@ class OnboardingScreen extends StatelessWidget {
                   height: 320,
                 ),
                 Text(
-                  'Description Text 2',
+                  'Xiaozhuang Hospital',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'A hospital is a place where patients can seek medical treatment and care for various health conditions and illnesses. Hospitals typically offer a wide range of medical services, including emergency care, surgery, diagnostic testing, and specialized treatment for specific health issues.',
+                  'Xiaozhuang Hospital provides health facilities to make it easier for people who need medical assistance.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),

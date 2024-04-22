@@ -13,7 +13,7 @@ class ScreenEmpat extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundImage: AssetImage('assets/avatar.jpg'),
+                backgroundImage: AssetImage('assets/img/avatar.jpg'),
               ),
               SizedBox(height: 20),
               Text(
@@ -91,7 +91,7 @@ class LogoutButton extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-        primary: Colors.red,
+        backgroundColor: Colors.red,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

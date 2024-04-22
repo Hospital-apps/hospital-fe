@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hospitalapps/screens/ConsultationScreen.dart';
+import 'package:hospitalapps/screens/DoctorScheduleScreen.dart';
+import 'package:hospitalapps/screens/HistoryScreen.dart';
+import 'package:hospitalapps/screens/MedCheckScreen.dart';
 
 class ScreenSatu extends StatelessWidget {
   @override
@@ -51,17 +54,38 @@ class ScreenSatu extends StatelessWidget {
                 NavIconButton(
                   iconPath: 'assets/img/examination.png',
                   label: 'Medical Checkup',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MedicalCheckupScreen()), // Ganti DoctorPage dengan halaman yang sesuai
+                    );
+                  },
                 ),
                 NavIconButton(
                   iconPath: 'assets/img/schedule.png',
                   label: 'Doctor Schedule',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DoctorSchedule()), // Ganti DoctorPage dengan halaman yang sesuai
+                    );
+                  },
                 ),
                 NavIconButton(
                   iconPath: 'assets/img/ambulance.png',
                   label: 'Ambulance',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Consultation()), // Ganti DoctorPage dengan halaman yang sesuai
+                    );
+                  },
                 ),
               ],
             ),
