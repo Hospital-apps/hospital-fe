@@ -8,6 +8,28 @@ class MedicalCheckupScreen extends StatefulWidget {
 }
 
 class MedCheckState extends State<MedicalCheckupScreen> {
+  late DateTime selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = DateTime.now();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2021),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  }
+
   bool isChecked = false;
 
   @override
@@ -19,6 +41,19 @@ class MedCheckState extends State<MedicalCheckupScreen> {
         body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Date:'),
+                SizedBox(width: 10),
+                TextButton(
+                  onPressed: () => _selectDate(context),
+                  child: Text(
+                    '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                  ),
+                ),
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -57,21 +92,21 @@ class MedCheckState extends State<MedicalCheckupScreen> {
               width: 500,
               height: 250,
             ),
-            NextMedCheckBtn()
+            MakeAppointmentButton(),
           ]),
         ));
   }
 }
 
-class NextMedCheckBtn extends StatelessWidget {
+class MakeAppointmentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // Tambahkan logika logout di sini
-        print('Next Medical Checkup');
+        // Tambahkan logika membuat janji temu di sini
+        print('Appointment created');
       },
-      child: Text('Next'),
+      child: Text('Make Appointment'),
     );
   }
 }
