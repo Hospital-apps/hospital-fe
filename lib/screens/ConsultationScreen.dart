@@ -1,245 +1,154 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Consultation extends StatefulWidget {
   const Consultation({super.key});
 
   @override
-  State<Consultation> createState() => ConsultationState();
+  State<Consultation> createState() => _ConsultationState();
 }
 
-class ConsultationState extends State<Consultation> {
-  // String selectedSpecialist;
-  // String selectedDoctor;
-  // DateTime selectedDate = DateTime.now();
-  // String selectedConsultationType;
+class _ConsultationState extends State<Consultation> {
+  final TextEditingController _dateController = TextEditingController();
+  String _selectedSpecialist = 'Choose';
+  String _selectedDoctor = 'Choose';
+  String _selectedConsultationType = 'Type';
 
-  // List<String> specialists = [
-  //   'Pediatric',
-  //   'Dentist',
-  //   'Orthopedic',
-  //   'Radiologist',
-  //   'Nutritionist'
-  // ];
-  // List<String> doctors = [
-  //   'dr, Jake Sim',
-  //   'dr. Heeseung Lee',
-  //   'dr. Jay Park',
-  //   'dr. Sunoo Kim',
-  //   'dr. Sunghoon Park',
-  //   'dr. Nishimura Riki'
-  // ];
-  // List<String> consultationTypes = ['Online', 'Offline'];
-
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: selectedDate,
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2101),
-  //   );
-  //   if (picked != null && picked != selectedDate) {
-  //     setState(() {
-  //       selectedDate = picked;
-  //     });
-  //   }
-  // }
+  @override
+  void dispose() {
+    _dateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Consultation'),
+        title: const Text('Consultation'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
             Text(
               'Select Specialist',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            // DropdownButtonFormField<String>(
-            //   value: selectedSpecialist,
-            //   onChanged: (newValue) {
-            //     setState(() {
-            //       selectedSpecialist = newValue!;
-            //     });
-            //   },
-            //   items: specialists.map((specialist) {
-            //     return DropdownMenuItem(
-            //       child: Text(specialist),
-            //       value: specialist,
-            //     );
-            //   }).toList(),
-            //   decoration: InputDecoration(
-            //     labelText: 'Select Specialist',
-            //     border: OutlineInputBorder(),
-            //   ),
-            // ),
-            SizedBox(height: 10),
+            DropdownButton<String>(
+              value: _selectedSpecialist,
+              isExpanded: true,
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedSpecialist = newValue!;
+                });
+              },
+              items: <String>[
+                'Choose',
+                'Cardiologist',
+                'Dentist',
+                'Pediatrician'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 20),
             Text(
               'Select Doctor',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            // DropdownButtonFormField<String>(
-            //   value: selectedDoctor,
-            //   onChanged: (newValue) {
-            //     setState(() {
-            //       selectedDoctor = newValue!;
-            //     });
-            //   },
-            //   items: doctors.map((doctor) {
-            //     return DropdownMenuItem(
-            //       child: Text(doctor),
-            //       value: doctor,
-            //     );
-            //   }).toList(),
-            //   decoration: InputDecoration(
-            //     labelText: 'Select Doctor',
-            //     border: OutlineInputBorder(),
-            //   ),
-            // ),
-            SizedBox(height: 10),
+            DropdownButton<String>(
+              value: _selectedDoctor,
+              isExpanded: true,
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedDoctor = newValue!;
+                });
+              },
+              items: <String>[
+                'Choose',
+                'Dr. Smith',
+                'Dr. Johnson',
+                'Dr. Williams'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 20),
             Text(
               'Select Date',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: InkWell(
-            //         onTap: () => _selectDate(context),
-            //         child: InputDecorator(
-            //           decoration: InputDecoration(
-            //             labelText: 'Select Date',
-            //             border: OutlineInputBorder(),
-            //           ),
-            //           child: Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             children: [
-            //               Text(
-            //                 "${selectedDate.toLocal()}".split(' ')[0],
-            //               ),
-            //               Icon(Icons.calendar_today),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            SizedBox(height: 10),
+            TextField(
+              controller: _dateController,
+              decoration: InputDecoration(
+                hintText: 'YYYY-MM-DD',
+                border: OutlineInputBorder(),
+              ),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2100),
+                );
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  _dateController.text = formattedDate;
+                }
+              },
+            ),
+            SizedBox(height: 20),
             Text(
               'Select Consultation Type',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            // DropdownButtonFormField<String>(
-            //   value: selectedConsultationType,
-            //   onChanged: (newValue) {
-            //     setState(() {
-            //       selectedConsultationType = newValue!;
-            //     });
-            //   },
-            //   items: consultationTypes.map((type) {
-            //     return DropdownMenuItem(
-            //       child: Text(type),
-            //       value: type,
-            //     );
-            //   }).toList(),
-            //   decoration: InputDecoration(
-            //     labelText: 'Select Consultation Type',
-            //     border: OutlineInputBorder(),
-            //   ),
-            // ),
-            SizedBox(height: 20),
-            MakeAppointmentButton(),
+            DropdownButton<String>(
+              value: _selectedConsultationType,
+              isExpanded: true,
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedConsultationType = newValue!;
+                });
+              },
+              items: <String>['Type', 'In-Person', 'Virtual']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 30),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_selectedSpecialist != 'Choose' &&
+                      _selectedDoctor != 'Choose' &&
+                      _selectedConsultationType != 'Type' &&
+                      _dateController.text.isNotEmpty) {
+                    print('Appointment created with:');
+                    print('Specialist: $_selectedSpecialist');
+                    print('Doctor: $_selectedDoctor');
+                    print('Date: ${_dateController.text}');
+                    print('Consultation Type: $_selectedConsultationType');
+                  } else {
+                    print('Please fill in all fields.');
+                  }
+                },
+                child: const Text('Make Appointment'),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-class MakeAppointmentButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Appointment created');
-      },
-      child: Text('Make Appointment'),
-    );
-  }
-}
-
-// class DatePickerExample extends StatefulWidget {
-//   const DatePickerExample({super.key, this.restorationId});
-
-//   final String? restorationId;
-
-//   @override
-//   State<DatePickerExample> createState() => _DatePickerExampleState();
-// }
-
-// /// RestorationProperty objects can be used because of RestorationMixin.
-// class _DatePickerExampleState extends State<DatePickerExample>
-//     with RestorationMixin {
-//   // In this example, the restoration ID for the mixin is passed in through
-//   // the [StatefulWidget]'s constructor.
-//   @override
-//   String? get restorationId => widget.restorationId;
-
-//   final RestorableDateTime _selectedDate =
-//       RestorableDateTime(DateTime(2021, 7, 25));
-//   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
-//       RestorableRouteFuture<DateTime?>(
-//     onComplete: _selectDate,
-//     onPresent: (NavigatorState navigator, Object? arguments) {
-//       return navigator.restorablePush(
-//         _datePickerRoute,
-//         arguments: _selectedDate.value.millisecondsSinceEpoch,
-//       );
-//     },
-//   );
-
-//   @pragma('vm:entry-point')
-//   static Route<DateTime> _datePickerRoute(
-//     BuildContext context,
-//     Object? arguments,
-//   ) {
-//     return DialogRoute<DateTime>(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return DatePickerDialog(
-//           restorationId: 'date_picker_dialog',
-//           initialEntryMode: DatePickerEntryMode.calendarOnly,
-//           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-//           firstDate: DateTime(2021),
-//           lastDate: DateTime(2022),
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-//     registerForRestoration(_selectedDate, 'selected_date');
-//     registerForRestoration(
-//         _restorableDatePickerRouteFuture, 'date_picker_route_future');
-//   }
-
-//   void _selectDate(DateTime? newSelectedDate) {
-//     if (newSelectedDate != null) {
-//       setState(() {
-//         _selectedDate.value = newSelectedDate;
-//         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//           content: Text(
-//               'Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'),
-//         ));
-//       });
-//     }
-//   }
-// }
