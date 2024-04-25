@@ -8,7 +8,7 @@ class DetailConsultationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Icon(
                 Icons.person_3_rounded,
                 size: 50,
@@ -23,7 +23,7 @@ class DetailConsultationScreen extends StatelessWidget {
               ),
             ]),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 JoinMeetBtn(),
                 FinishBtn(),

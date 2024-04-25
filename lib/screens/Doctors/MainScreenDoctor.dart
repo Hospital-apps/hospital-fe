@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenDoctor extends StatelessWidget {
@@ -47,7 +48,6 @@ class MainScreenDoctor extends StatelessWidget {
               ),
               const SizedBox(height: 30),
             ]),
-            Divider(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,6 +85,58 @@ class MainScreenDoctor extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
               ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Package",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: null,
+                  child: const Text('All'),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 150,
+                viewportFraction: 0.7,
+                initialPage: 1,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
+              items: [
+                'assets/img/package1.jpg',
+                'assets/img/package2.jpg',
+              ].map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ],
         ),
@@ -173,6 +225,10 @@ class ConsultationCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [AcceptBtn(), RejectBtn()],
+                    )
                   ],
                 ),
               ],
@@ -180,6 +236,30 @@ class ConsultationCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AcceptBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        print('Detail Appointment');
+      },
+      child: Text('Accept'),
+    );
+  }
+}
+
+class RejectBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        print('Detail Appointment');
+      },
+      child: Text('Reject'),
     );
   }
 }

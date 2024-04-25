@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Patients/DetailConsultScreen.dart';
 
-class MyAppointmentDoctor extends StatelessWidget {
+class DetailMyAppointmentDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            ConsultationCard(
-              patientName: 'Stephanie',
-              age: '20 years old',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            ConsultationCard(
-              patientName: 'Stephanie',
-              age: '20 years old',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Icon(
+                Icons.person_3_rounded,
+                size: 50,
+              ),
+              SizedBox(width: 10),
+              ConsultationCard(
+                patientName: 'Stephanie',
+                age: '20 years old',
+                date: 'April 12, 2024',
+                time: '10:00 AM - 11:00 AM',
+                status: 'Online Consult',
+              ),
+            ]),
+            Text('Notes'),
+            JoinMeetBtn(),
+            FinishBtn()
           ],
         ),
       ),
@@ -111,10 +114,6 @@ class ConsultationCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [AcceptBtn(), RejectBtn()],
-                    )
                   ],
                 ),
               ],
@@ -122,42 +121,6 @@ class ConsultationCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class DetailConsultBtn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Detail Appointment');
-      },
-      child: Text('Detail'),
-    );
-  }
-}
-
-class AcceptBtn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Detail Appointment');
-      },
-      child: Text('Accept'),
-    );
-  }
-}
-
-class RejectBtn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Detail Appointment');
-      },
-      child: Text('Reject'),
     );
   }
 }

@@ -19,7 +19,7 @@ class HomeScreenDoctor extends StatelessWidget {
         controller: controller.motionTabBarController,
         children: <Widget>[
           MainScreenDoctor(),
-          HistoryScreenDoctor(),
+          HistoryDoctor(),
         ],
       ),
       bottomNavigationBar: MotionTabBar(

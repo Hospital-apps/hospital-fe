@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-class HistoryScreenDoctor extends StatelessWidget {
+class HistoryDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,13 +12,12 @@ class HistoryScreenDoctor extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             ConsultationCard(
-              patientName: 'Dr. John Doe',
+              patientName: 'Stephanie',
               age: '20 years old',
               date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
