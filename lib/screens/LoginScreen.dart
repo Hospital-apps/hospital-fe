@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Doctors/HomeScreenDoctor.dart';
 import 'package:hospitalapps/screens/Patients/HomeScreen.dart';
 import 'package:hospitalapps/screens/RegisterScreen.dart';
 import 'package:hospitalapps/widgets/TextField.dart';
@@ -55,7 +56,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreenDoctor()),
                     );
                   },
                   child: Padding(

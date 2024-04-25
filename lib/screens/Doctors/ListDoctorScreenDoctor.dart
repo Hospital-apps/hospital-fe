@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Doctors/AddDoctorListScreen.dart';
 
 class ListDoctorScreenDoctor extends StatelessWidget {
   @override
@@ -13,7 +14,12 @@ class ListDoctorScreenDoctor extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20),
               ),
-              onPressed: null,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddDoctorList()),
+                );
+              },
               child: const Text('Add'),
             ),
             const SizedBox(height: 30),

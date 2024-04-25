@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hospitalapps/controllers/HomeController.dart';
 import 'package:hospitalapps/screens/Doctors/HistoryScreenDoctor.dart';
 import 'package:hospitalapps/screens/Doctors/MainScreenDoctor.dart';
+import 'package:hospitalapps/screens/Doctors/MyAppointmentScreenDoctor.dart';
+import 'package:hospitalapps/screens/Doctors/ProfileScreenDoctor.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 
 class HomeScreenDoctor extends StatelessWidget {
@@ -20,6 +22,8 @@ class HomeScreenDoctor extends StatelessWidget {
         children: <Widget>[
           MainScreenDoctor(),
           HistoryDoctor(),
+          MyAppointmentDoctor(),
+          ProfileDoctor()
         ],
       ),
       bottomNavigationBar: MotionTabBar(

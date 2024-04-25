@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Doctors/MyAppointmentScreenDoctor.dart';
+import 'package:hospitalapps/screens/Doctors/PackageScreen.dart';
 
 class MainScreenDoctor extends StatelessWidget {
   @override
@@ -43,7 +45,13 @@ class MainScreenDoctor extends StatelessWidget {
                 style: TextButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20),
                 ),
-                onPressed: null,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyAppointmentDoctor()),
+                  );
+                },
                 child: const Text('All'),
               ),
               const SizedBox(height: 30),
@@ -100,7 +108,12 @@ class MainScreenDoctor extends StatelessWidget {
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
                   ),
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PackageScreen()),
+                    );
+                  },
                   child: const Text('All'),
                 ),
                 const SizedBox(height: 30),
