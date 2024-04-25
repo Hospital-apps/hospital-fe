@@ -6,154 +6,108 @@ import 'package:hospitalapps/screens/Doctors/PackageScreen.dart';
 class MainScreenDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Hello, username!",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.red[500],
-                    size: 30,
-                  ),
-                  onPressed: () {},
-                )
-              ],
-            ),
-            Divider(),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "Appointment",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20),
-                ),
+            const SizedBox(height: 20),
+            _buildHeader(context),
+            const Divider(),
+            SectionTitle(
+                title: "Appointment",
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyAppointmentDoctor()),
-                  );
-                },
-                child: const Text('All'),
-              ),
-              const SizedBox(height: 30),
-            ]),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                ConsultationCard(
-                  patientName: 'Stephanie',
-                  age: '20 years old',
-                  date: 'April 12, 2024',
-                  time: '10:00 AM - 11:00 AM',
-                  status: 'Online Consult',
-                ),
-                SizedBox(height: 20),
-                ConsultationCard(
-                  patientName: 'Stephanie',
-                  age: '20 years old',
-                  date: 'April 12, 2024',
-                  time: '10:00 AM - 11:00 AM',
-                  status: 'Online Consult',
-                ),
-                SizedBox(height: 20),
-                ConsultationCard(
-                  patientName: 'Stephanie',
-                  age: '20 years old',
-                  date: 'April 12, 2024',
-                  time: '10:00 AM - 11:00 AM',
-                  status: 'Online Consult',
-                ),
-                SizedBox(height: 20),
-                ConsultationCard(
-                  patientName: 'Stephanie',
-                  age: '20 years old',
-                  date: 'April 12, 2024',
-                  time: '10:00 AM - 11:00 AM',
-                  status: 'Online Consult',
-                ),
-                SizedBox(height: 20),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Package",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PackageScreen()),
-                    );
-                  },
-                  child: const Text('All'),
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 150,
-                viewportFraction: 0.7,
-                initialPage: 1,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
-              ),
-              items: [
-                'assets/img/package1.jpg',
-                'assets/img/package2.jpg',
-              ].map((imagePath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
+                      MaterialPageRoute(
+                          builder: (context) => MyAppointmentDoctor()));
+                }),
+            ConsultationList(),
+            SectionTitle(
+                title: "Package",
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PackageScreen()));
+                }),
+            PackageCarousel(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            "Hello, username!",
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.notifications,
+              color: Theme.of(context).colorScheme.secondary),
+          iconSize: 30,
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String title;
+  final VoidCallback onPressed;
+
+  SectionTitle({required this.title, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          TextButton(
+            onPressed: onPressed,
+            child: const Text('All'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ConsultationList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+          4,
+          (index) => Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ConsultationCard(
+                  patientName: 'Stephanie',
+                  age: '20 years old',
+                  date: 'April 12, 2024',
+                  time: '10:00 AM - 11:00 AM',
+                  status: 'Online Consult',
+                ),
+              )),
     );
   }
 }
@@ -175,104 +129,71 @@ class ConsultationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            width: double.infinity,
-            height: 200,
-          ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(patientName, style: Theme.of(context).textTheme.headline6),
+            Text(age, style: Theme.of(context).textTheme.subtitle1),
+            Text('Date: $date', style: Theme.of(context).textTheme.bodyText1),
+            Text('Time: $time', style: Theme.of(context).textTheme.bodyText1),
+            Text('Status: $status',
+                style: Theme.of(context).textTheme.bodyText1),
+            const SizedBox(height: 10),
+            Row(
               children: [
-                Icon(
-                  Icons.person_3_rounded,
-                  size: 50,
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      patientName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      age,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Date: $date',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Time: $time',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Status: $status',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [AcceptBtn(), RejectBtn()],
-                    )
-                  ],
-                ),
+                ElevatedButton(onPressed: () {}, child: Text('Accept')),
+                const SizedBox(width: 10),
+                OutlinedButton(onPressed: () {}, child: Text('Reject')),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class AcceptBtn extends StatelessWidget {
+class PackageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Detail Appointment');
-      },
-      child: Text('Accept'),
-    );
-  }
-}
-
-class RejectBtn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Detail Appointment');
-      },
-      child: Text('Reject'),
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 180,
+        viewportFraction: 0.8,
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        reverse: false,
+        autoPlay: true,
+        autoPlayInterval: Duration(seconds: 3),
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+      ),
+      items: [
+        'assets/img/package1.jpg',
+        'assets/img/package2.jpg',
+      ].map((imagePath) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }
