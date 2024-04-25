@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospitalapps/screens/HomeScreen.dart';
+import 'package:hospitalapps/screens/Patients/HomeScreen.dart';
 import 'package:hospitalapps/screens/RegisterScreen.dart';
 import 'package:hospitalapps/widgets/TextField.dart';
 

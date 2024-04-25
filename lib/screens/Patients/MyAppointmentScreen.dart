@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ScreenDua extends StatelessWidget {
+class MyAppointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,20 +23,10 @@ class ScreenDua extends StatelessWidget {
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
+            MedCheckCard(
+              package: 'package 1',
+              date: 'April, 30th 2024',
+            )
           ],
         ),
       ),
@@ -114,7 +104,7 @@ class ConsultationCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    ConsultAgainBtn(),
+                    DetailConsultBtn()
                   ],
                 ),
               ],
@@ -126,15 +116,80 @@ class ConsultationCard extends StatelessWidget {
   }
 }
 
-class ConsultAgainBtn extends StatelessWidget {
+class MedCheckCard extends StatelessWidget {
+  final String package;
+  final String date;
+
+  MedCheckCard({
+    required this.package,
+    required this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
+            height: 150,
+          ),
+          Positioned(
+              top: 20,
+              left: 20,
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Icon(
+                  Icons.person_3_rounded,
+                  size: 50,
+                ),
+                SizedBox(width: 10),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    package,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Date: $date',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  DetailMedCheckBtn()
+                ])
+              ]))
+        ]));
+  }
+}
+
+class DetailConsultBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // Tambahkan logika logout di sini
-        print('Consult Again');
+        print('Detail Appointment');
       },
-      child: Text('Consult Again'),
+      child: Text('Detail'),
+    );
+  }
+}
+
+class DetailMedCheckBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        print('Detail Appointment');
+      },
+      child: Text('Detail'),
     );
   }
 }

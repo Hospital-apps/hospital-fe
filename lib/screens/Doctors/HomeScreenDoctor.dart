@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hospitalapps/controllers/HomeController.dart';
-import 'package:hospitalapps/screens/ScreenDua.dart';
-import 'package:hospitalapps/screens/ScreenEmpat.dart';
-import 'package:hospitalapps/screens/ScreenSatu.dart';
-import 'package:hospitalapps/screens/ScreenTiga.dart';
+import 'package:hospitalapps/screens/Doctors/HistoryScreenDoctor.dart';
+import 'package:hospitalapps/screens/Doctors/MainScreenDoctor.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreenDoctor extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -20,10 +18,8 @@ class HomeScreen extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         controller: controller.motionTabBarController,
         children: <Widget>[
-          ScreenSatu(),
-          ScreenDua(),
-          ScreenTiga(),
-          ScreenEmpat(),
+          MainScreenDoctor(),
+          HistoryScreenDoctor(),
         ],
       ),
       bottomNavigationBar: MotionTabBar(

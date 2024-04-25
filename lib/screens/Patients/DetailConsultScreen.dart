@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ScreenTiga extends StatelessWidget {
+class DetailConsultationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -8,35 +8,27 @@ class ScreenTiga extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'Dr. John Doe',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Icon(
+                Icons.person_3_rounded,
+                size: 50,
+              ),
+              SizedBox(width: 10),
+              SizedBox(height: 20),
+              ConsultationCard(
+                doctorName: 'Dr. John Doe',
+                date: 'April 12, 2024',
+                time: '10:00 AM - 11:00 AM',
+                status: 'Online Consult',
+              ),
+            ]),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                JoinMeetBtn(),
+                FinishBtn(),
+              ],
+            )
           ],
         ),
       ),
@@ -121,6 +113,26 @@ class ConsultationCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class JoinMeetBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text('Join Meet'),
+    );
+  }
+}
+
+class FinishBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text('Finish'),
     );
   }
 }

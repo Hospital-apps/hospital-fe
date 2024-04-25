@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MedicalCheckupScreen extends StatefulWidget {
-  const MedicalCheckupScreen({super.key});
+class MedicalCheckup extends StatefulWidget {
+  const MedicalCheckup({super.key});
 
   @override
-  State<MedicalCheckupScreen> createState() => MedCheckState();
+  State<MedicalCheckup> createState() => MedCheckState();
 }
 
-class MedCheckState extends State<MedicalCheckupScreen> {
+class MedCheckState extends State<MedicalCheckup> {
   late DateTime selectedDate;
 
   @override
