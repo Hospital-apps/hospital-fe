@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Email / Phone'),
+                    CustomTextFormField(label: 'Email'),
                     SizedBox(height: 16.0),
                     CustomTextFormField(label: 'Password', isPassword: true),
                   ],
@@ -56,8 +56,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => HomeScreenDoctor()),
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
                   },
                   child: Padding(
@@ -78,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Belum punya akun? Daftar sekarang',
+                  "Don't have an account yet? Register now",
                   style: TextStyle(color: Colors.blue),
                 ),
               ),

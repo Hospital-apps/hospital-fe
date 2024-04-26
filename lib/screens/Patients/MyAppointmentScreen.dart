@@ -10,14 +10,14 @@ class MyAppointment extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             ConsultationCard(
-              doctorName: 'Dr. John Doe',
+              doctorName: 'dr. Jake Sim',
               date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
             ConsultationCard(
-              doctorName: 'Dr. John Doe',
+              doctorName: 'dr. Heeseung Lee',
               date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
@@ -144,7 +144,7 @@ class MedCheckCard extends StatelessWidget {
               child:
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Icon(
-                  Icons.person_3_rounded,
+                  Icons.assignment,
                   size: 50,
                 ),
                 SizedBox(width: 10),

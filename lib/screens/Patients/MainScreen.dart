@@ -80,6 +80,19 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Doctor List"),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: null,
+                  child: const Text('All'),
+                )
+              ],
+            ),
             SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,

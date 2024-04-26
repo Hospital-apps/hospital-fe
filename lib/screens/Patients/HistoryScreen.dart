@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospitalapps/screens/Patients/ConsultationScreen.dart';
+import 'package:hospitalapps/screens/Patients/MedCheckScreen.dart';
 
 class HistoryScreen extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class HistoryScreen extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             ConsultationCard(
-              doctorName: 'Dr. John Doe',
+              doctorName: 'dr. Jake Sim',
               date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
@@ -130,7 +131,7 @@ class MedCheckCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             width: double.infinity,
-            height: 100,
+            height: 150,
           ),
           Positioned(
               top: 20,
@@ -138,7 +139,7 @@ class MedCheckCard extends StatelessWidget {
               child:
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Icon(
-                  Icons.person_3_rounded,
+                  Icons.assignment,
                   size: 50,
                 ),
                 SizedBox(width: 10),
@@ -157,6 +158,7 @@ class MedCheckCard extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
+                  MedCheckBtn()
                 ])
               ]))
         ]));
@@ -172,6 +174,19 @@ class ConsultAgainBtn extends StatelessWidget {
         // print('Consult Again');
       },
       child: Text('Consult Again'),
+    );
+  }
+}
+
+class MedCheckBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        MedicalCheckup();
+        // print('Consult Again');
+      },
+      child: Text('Make Appointment Again'),
     );
   }
 }
