@@ -49,6 +49,8 @@ class RegisterScreen extends StatelessWidget {
                     CustomTextFormField(label: 'Phone Number'),
                     SizedBox(height: 16.0),
                     CustomTextFormField(label: 'Password', isPassword: true),
+                    SizedBox(height: 16.0),
+                    CustomTextFormField(label: 'Role'),
                   ],
                 ),
               ),
