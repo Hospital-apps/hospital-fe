@@ -103,7 +103,7 @@ class DropDownDoctor extends State<DropDownSelectDoctor> {
     'dr. Jay Park - General Practitioner',
     'dr. Sunghoon Park - Orthopedic Surgeon',
     'dr. Jungwon Yang - Dermatologist',
-    'dr. Sunoo Park - Obstetrician',
+    'dr. Sunoo Kim - Obstetrician',
     'dr. Niki - Cardiologist',
   ];
 
