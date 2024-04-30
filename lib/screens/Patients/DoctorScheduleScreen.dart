@@ -30,7 +30,7 @@ class DoctorScheduleState extends State<DoctorSchedule> {
               ),
             ),
           ),
-          SelectDate(),
+          // SelectDate(),
           SizedBox(height: 20),
           DoctorList(),
         ],
@@ -39,83 +39,83 @@ class DoctorScheduleState extends State<DoctorSchedule> {
   }
 }
 
-class SelectDate extends StatefulWidget {
-  @override
-  _SelectDateState createState() => _SelectDateState();
-}
+// class SelectDate extends StatefulWidget {
+//   @override
+//   _SelectDateState createState() => _SelectDateState();
+// }
 
-class _SelectDateState extends State<SelectDate> {
-  late DateTime selectedDate;
+// class _SelectDateState extends State<SelectDate> {
+//   late DateTime selectedDate;
 
-  @override
-  void initState() {
-    super.initState();
-    selectedDate = DateTime.now();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     selectedDate = DateTime.now();
+//   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-    }
-  }
+//   Future<void> _selectDate(BuildContext context) async {
+//     final DateTime? pickedDate = await showDatePicker(
+//       context: context,
+//       initialDate: selectedDate,
+//       firstDate: DateTime(2000),
+//       lastDate: DateTime(2101),
+//     );
+//     if (pickedDate != null && pickedDate != selectedDate) {
+//       setState(() {
+//         selectedDate = pickedDate;
+//       });
+//     }
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Background Container
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
-          ),
-          width: 300,
-          height: 50,
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Date',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  TextButton(
-                    onPressed: () => _selectDate(context),
-                    child: Text(
-                      "${selectedDate.toLocal()}".split(' ')[0],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         // Background Container
+//         Container(
+//           decoration: BoxDecoration(
+//             color: Colors.grey[200],
+//             borderRadius: BorderRadius.circular(10),
+//           ),
+//           width: 300,
+//           height: 50,
+//         ),
+//         Positioned(
+//           top: 20,
+//           left: 20,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     'Date',
+//                     style: TextStyle(
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 15,
+//                     ),
+//                   ),
+//                   SizedBox(width: 10),
+//                   TextButton(
+//                     onPressed: () => _selectDate(context),
+//                     child: Text(
+//                       "${selectedDate.toLocal()}".split(' ')[0],
+//                       style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 15,
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class DoctorList extends StatelessWidget {
   @override
