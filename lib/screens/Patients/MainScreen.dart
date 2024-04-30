@@ -94,7 +94,12 @@ class MainScreen extends StatelessWidget {
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
                   ),
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DoctorSchedule()),
+                    );
+                  },
                   child: const Text('All'),
                 )
               ],
