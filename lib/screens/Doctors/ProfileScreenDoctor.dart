@@ -25,16 +25,24 @@ class ProfileDoctor extends StatelessWidget {
               ),
               SizedBox(height: 10),
               UserInfoRow(
+                label: "Nickname:",
+                value: "your nickname here",
+              ),
+              UserInfoRow(
                 label: "Email:",
                 value: "example@example.com",
+              ),
+              UserInfoRow(
+                label: "Password:",
+                value: "+1234567890",
               ),
               UserInfoRow(
                 label: "Phone Number:",
                 value: "+1234567890",
               ),
               UserInfoRow(
-                label: "Specialist:",
-                value: "Pediatrician",
+                label: "Role:",
+                value: "Doctor",
               ),
               SizedBox(height: 40),
               LogoutButton(),

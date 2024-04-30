@@ -8,28 +8,7 @@ class DoctorSchedule extends StatefulWidget {
 }
 
 class DoctorScheduleState extends State<DoctorSchedule> {
-  late DateTime selectedDate;
   TextEditingController searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    selectedDate = DateTime.now();
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +30,6 @@ class DoctorScheduleState extends State<DoctorSchedule> {
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Text('Select Date'),
           SelectDate(),
           SizedBox(height: 20),
           DoctorList(),

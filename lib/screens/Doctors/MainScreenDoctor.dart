@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Doctors/AddDoctorListScreen.dart';
+import 'package:hospitalapps/screens/Doctors/AddPackageScreen.dart';
 import 'package:hospitalapps/screens/Doctors/MyAppointmentScreenDoctor.dart';
 import 'package:hospitalapps/screens/Doctors/PackageScreen.dart';
 
@@ -15,7 +17,31 @@ class MainScreenDoctor extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             _buildHeader(context),
-            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                NavIconButton(
+                  iconPath: 'assets/img/doctorList.png',
+                  label: 'Add Doctor Information',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddDoctorList()),
+                    );
+                  },
+                ),
+                NavIconButton(
+                  iconPath: 'assets/img/package.png',
+                  label: 'Add Package',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddPackage()),
+                    );
+                  },
+                ),
+              ],
+            ),
             SectionTitle(
                 title: "Appointment",
                 onPressed: () {
@@ -100,7 +126,7 @@ class ConsultationList extends StatelessWidget {
           4,
           (index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: ConsultationCard(
+                child: ConsultationCardDetail(
                   patientName: 'Stephanie',
                   age: '20 years old',
                   date: 'April 12, 2024',
@@ -112,14 +138,14 @@ class ConsultationList extends StatelessWidget {
   }
 }
 
-class ConsultationCard extends StatelessWidget {
+class ConsultationCardDetail extends StatelessWidget {
   final String patientName;
   final String age;
   final String date;
   final String time;
   final String status;
 
-  ConsultationCard({
+  ConsultationCardDetail({
     required this.patientName,
     required this.age,
     required this.date,
@@ -129,29 +155,76 @@ class ConsultationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(patientName, style: Theme.of(context).textTheme.headline6),
-            Text(age, style: Theme.of(context).textTheme.subtitle1),
-            Text('Date: $date', style: Theme.of(context).textTheme.bodyText1),
-            Text('Time: $time', style: Theme.of(context).textTheme.bodyText1),
-            Text('Status: $status',
-                style: Theme.of(context).textTheme.bodyText1),
-            const SizedBox(height: 10),
-            Row(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
+            height: 250,
+          ),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ElevatedButton(onPressed: () {}, child: Text('Accept')),
-                const SizedBox(width: 10),
-                OutlinedButton(onPressed: () {}, child: Text('Reject')),
+                Icon(
+                  Icons.person_3_rounded,
+                  size: 50,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      patientName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      age,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Date: $date',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Time: $time',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Status: $status',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    DetailConsultBtn()
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -194,6 +267,29 @@ class PackageCarousel extends StatelessWidget {
           },
         );
       }).toList(),
+    );
+  }
+}
+
+class NavIconButton extends StatelessWidget {
+  final String iconPath;
+  final Function()? onPressed;
+
+  const NavIconButton({
+    required this.iconPath,
+    required this.onPressed,
+    required String label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Image.asset(
+        iconPath,
+        width: 40,
+        height: 40,
+      ),
+      onPressed: onPressed,
     );
   }
 }

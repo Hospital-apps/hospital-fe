@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Doctors/AddPackageScreen.dart';
 
 class PackageScreen extends StatelessWidget {
   @override
@@ -12,13 +13,14 @@ class PackageScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           width: double.infinity,
-          height: 200,
+          height: double.infinity,
         ),
         Positioned(
           top: 20,
           left: 20,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            AddPackageBtn(),
             Text(
               'Package 1',
               style: TextStyle(
@@ -27,16 +29,41 @@ class PackageScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 5),
+            Image.asset(
+              'assets/img/package1.jpg',
+              width: 500,
+              height: 250,
+            ),
             Text(
               'Package 1',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-            )
+            ),
+            Image.asset(
+              'assets/img/package2.jpg',
+              width: 500,
+              height: 250,
+            ),
           ]),
         ),
       ]),
+    );
+  }
+}
+
+class AddPackageBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddPackage()),
+        );
+      },
+      child: Text('Add'),
     );
   }
 }

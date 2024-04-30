@@ -25,7 +25,7 @@ class Profile extends StatelessWidget {
               ),
               SizedBox(height: 10),
               UserInfoRow(
-                label: "Nick Name:",
+                label: "Nickname:",
                 value: "your nickname here",
               ),
               UserInfoRow(
@@ -33,8 +33,16 @@ class Profile extends StatelessWidget {
                 value: "example@example.com",
               ),
               UserInfoRow(
+                label: "Password:",
+                value: "+1234567890",
+              ),
+              UserInfoRow(
                 label: "Phone Number:",
                 value: "+1234567890",
+              ),
+              UserInfoRow(
+                label: "Role:",
+                value: "Patient",
               ),
               SizedBox(height: 40),
               LogoutButton(),

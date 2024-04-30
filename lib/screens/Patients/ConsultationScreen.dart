@@ -44,11 +44,6 @@ class ConsultationState extends State<Consultation> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            Text(
-              'Select Specialist',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: 10),
             Text(
               'Select Doctor',

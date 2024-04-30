@@ -18,6 +18,12 @@ class HistoryScreen extends StatelessWidget {
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
+            ConsultationCardPrescrip(
+              doctorName: 'dr. Heeseung Lee',
+              date: 'April 25th, 2024',
+              status: 'Online Consult',
+            ),
+            SizedBox(height: 20),
             MedCheckCard(
               package: 'package 1',
               date: 'April, 30th 2024',
@@ -87,6 +93,79 @@ class ConsultationCard extends StatelessWidget {
                     SizedBox(height: 5),
                     Text(
                       'Time: $time',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Status: $status',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ConsultAgainBtn(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ConsultationCardPrescrip extends StatelessWidget {
+  final String doctorName;
+  final String date;
+  final String status;
+
+  ConsultationCardPrescrip({
+    required this.doctorName,
+    required this.date,
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
+            height: 200,
+          ),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.person_3_rounded,
+                  size: 50,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      doctorName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Date: $date',
                       style: TextStyle(
                         fontSize: 16,
                       ),

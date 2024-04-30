@@ -83,7 +83,13 @@ class MainScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Doctor List"),
+                Text(
+                  "Doctor List",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 TextButton(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
@@ -109,7 +115,7 @@ class MainScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              "Advertisement",
+              "Package",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -132,8 +138,8 @@ class MainScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
               ),
               items: [
-                'assets/img/ads1.png',
-                'assets/img/ads2.png',
+                'assets/img/package1.jpg',
+                'assets/img/package2.jpg',
               ].map((imagePath) {
                 return Builder(
                   builder: (BuildContext context) {
