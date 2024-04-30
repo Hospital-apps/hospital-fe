@@ -4,11 +4,39 @@ class Consultation extends StatefulWidget {
   const Consultation({super.key});
 
   @override
-  State<Consultation> createState() => ConsultationState();
+  State<Consultation> createState() => _ConsultationState();
 }
 
-class ConsultationState extends State<Consultation> {
+class _ConsultationState extends State<Consultation> {
   late DateTime selectedDate;
+  String selectedDoctor = 'dr. Jake Sim - Pediatric';
+  String selectedType = 'Offline Consultation';
+  String selectedTime = '09:00 AM'; // Initial time selection
+
+  final List<String> doctorItems = [
+    'dr. Jake Sim - Pediatric',
+    'dr. Heeseung Lee - Dentist',
+    'dr. Jay Park - General Practitioner',
+    'dr. Sunghoon Park - Orthopedic Surgeon',
+    'dr. Jungwon Yang - Dermatologist',
+    'dr. Sunoo Kim - Obstetrician',
+    'dr. Niki - Cardiologist',
+  ];
+
+  final List<String> typeItems = [
+    'Offline Consultation',
+    'Online Consultation',
+  ];
+
+  final List<String> timeItems = [
+    // Sample time slots
+    '09:00 AM',
+    '10:00 AM',
+    '11:00 AM',
+    '01:00 PM',
+    '02:00 PM',
+    '03:00 PM',
+  ];
 
   @override
   void initState() {
@@ -30,173 +58,93 @@ class ConsultationState extends State<Consultation> {
     }
   }
 
-  bool isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Consultation'),
-      ),
-      body: Padding(
+      appBar: AppBar(title: const Text('Consultation')),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 10),
-            Text(
-              'Select Doctor',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text('Select Doctor',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: selectedDoctor,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedDoctor = newValue!;
+                });
+              },
+              items: doctorItems.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            DropDownSelectDoctor(),
             SizedBox(height: 10),
-            Text(
-              'Select Date',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Date:'),
-                SizedBox(width: 10),
-                TextButton(
-                  onPressed: () => _selectDate(context),
+            Text('Select Date',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            DropdownButton<String>(
+              isExpanded: true,
+              value:
+                  '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+              onChanged: (_) => _selectDate(context),
+              items: [
+                DropdownMenuItem<String>(
+                  value:
+                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
                   child: Text(
-                    '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-                  ),
-                ),
+                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
+                )
               ],
             ),
-            SizedBox(height: 10),
-            Text(
-              'Select Time',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            SizedBox(height: 20),
+            Text('Select Time',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: selectedTime,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedTime = newValue!;
+                });
+              },
+              items: timeItems.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
             SizedBox(height: 20),
-            Text(
-              'Select Consultation Type',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text('Select Consultation Type',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: selectedType,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedType = newValue!;
+                });
+              },
+              items: typeItems.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            DropDownSelectType(),
             SizedBox(height: 20),
-            MakeAppointmentButton(),
+            ElevatedButton(
+              onPressed: () => print('Appointment created'),
+              child: const Text('Make Appointment'),
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class DropDownSelectDoctor extends StatefulWidget {
-  @override
-  DropDownDoctor createState() => DropDownDoctor();
-}
-
-class DropDownDoctor extends State<DropDownSelectDoctor> {
-  String _selectedItem = 'Pediatric'; // Initial selected item
-
-  // List of dropdown items
-  List<String> _dropdownItems = [
-    'dr. Jake Sim - Pediatric',
-    'dr. Heeseung Lee - Dentist',
-    'dr. Jay Park - General Practitioner',
-    'dr. Sunghoon Park - Orthopedic Surgeon',
-    'dr. Jungwon Yang - Dermatologist',
-    'dr. Sunoo Kim - Obstetrician',
-    'dr. Niki - Cardiologist',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Specialist'),
-      ),
-      body: Center(
-        child: DropdownButton<String>(
-          value: _selectedItem,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedItem = newValue!;
-            });
-          },
-          items: _dropdownItems.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
-class DropDownSelectType extends StatefulWidget {
-  @override
-  DropDownType createState() => DropDownType();
-}
-
-class DropDownType extends State<DropDownSelectType> {
-  String _selectedItem = 'Pediatric'; // Initial selected item
-
-  // List of dropdown items
-  List<String> _dropdownItems = [
-    'Offline Consultation',
-    'Online Consultation',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Specialist'),
-      ),
-      body: Center(
-        child: DropdownButton<String>(
-          value: _selectedItem,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedItem = newValue!;
-            });
-          },
-          items: _dropdownItems.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
-class MakeAppointmentButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        print('Appointment created');
-      },
-      child: Text('Make Appointment'),
     );
   }
 }
