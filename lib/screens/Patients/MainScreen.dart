@@ -164,23 +164,37 @@ class MainScreen extends StatelessWidget {
 
 class NavIconButton extends StatelessWidget {
   final String iconPath;
-  final Function()? onPressed;
+  final String label;
+  final VoidCallback? onPressed;
 
   const NavIconButton({
     required this.iconPath,
+    required this.label,
     required this.onPressed,
-    required String label,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Image.asset(
-        iconPath,
-        width: 40,
-        height: 40,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            iconPath,
+            width: 40,
+            height: 40,
+          ),
+          SizedBox(height: 8), // Add some space between the icon and the label
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
-      onPressed: onPressed,
     );
   }
 }
