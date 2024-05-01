@@ -1,22 +1,40 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:hospitalapps/screens/Doctors/AddDoctorListScreen.dart';
+import 'package:hospitalapps/screens/Doctors/AddDoctorInfoScreen.dart';
 import 'package:hospitalapps/screens/Doctors/AddPackageScreen.dart';
 import 'package:hospitalapps/screens/Doctors/MyAppointmentScreenDoctor.dart';
-import 'package:hospitalapps/screens/Doctors/PackageScreen.dart';
 
 class MainScreenDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            _buildHeader(context),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Hello, username!",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.red[500],
+                    size: 30,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -26,7 +44,8 @@ class MainScreenDoctor extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddDoctorList()),
+                      MaterialPageRoute(
+                          builder: (context) => AddDoctorInformation()),
                     );
                   },
                 ),
@@ -42,75 +61,124 @@ class MainScreenDoctor extends StatelessWidget {
                 ),
               ],
             ),
-            SectionTitle(
-                title: "Appointment",
-                onPressed: () {
-                  Navigator.push(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Appointment",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyAppointmentDoctor()));
-                }),
-            ConsultationList(),
-            SectionTitle(
-                title: "Package",
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PackageScreen()));
-                }),
-            PackageCarousel(),
+                          builder: (context) => MyAppointmentDoctor()),
+                    );
+                  },
+                  child: const Text('All'),
+                )
+              ],
+            ),
+            SizedBox(height: 20),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int index) {
+                return ConsultationCardLink(
+                  patientName: 'Stephanie',
+                  age: '20 years old',
+                  date: 'April 12, 2024',
+                  time: '10:00 AM - 11:00 AM',
+                  status: 'Online Consult',
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Package",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            // Carousel
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 150,
+                viewportFraction: 0.7,
+                initialPage: 1,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
+              items: [
+                'assets/img/package1.jpg',
+                'assets/img/package2.jpg',
+              ].map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
           ],
         ),
       ),
     );
   }
-
-  Widget _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            "Hello, username!",
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-        IconButton(
-          icon: Icon(Icons.notifications,
-              color: Theme.of(context).colorScheme.secondary),
-          iconSize: 30,
-          onPressed: () {},
-        ),
-      ],
-    );
-  }
 }
 
-class SectionTitle extends StatelessWidget {
-  final String title;
-  final VoidCallback onPressed;
+class NavIconButton extends StatelessWidget {
+  final String iconPath;
+  final String label;
+  final VoidCallback? onPressed;
 
-  SectionTitle({required this.title, required this.onPressed});
+  const NavIconButton({
+    required this.iconPath,
+    required this.label,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(fontWeight: FontWeight.bold),
+          Image.asset(
+            iconPath,
+            width: 40,
+            height: 40,
           ),
-          TextButton(
-            onPressed: onPressed,
-            child: const Text('All'),
+          SizedBox(height: 8), // Add some space between the icon and the label
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -118,34 +186,14 @@ class SectionTitle extends StatelessWidget {
   }
 }
 
-class ConsultationList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-          4,
-          (index) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: ConsultationCardDetail(
-                  patientName: 'Stephanie',
-                  age: '20 years old',
-                  date: 'April 12, 2024',
-                  time: '10:00 AM - 11:00 AM',
-                  status: 'Online Consult',
-                ),
-              )),
-    );
-  }
-}
-
-class ConsultationCardDetail extends StatelessWidget {
+class ConsultationCardLink extends StatelessWidget {
   final String patientName;
   final String age;
   final String date;
   final String time;
   final String status;
 
-  ConsultationCardDetail({
+  ConsultationCardLink({
     required this.patientName,
     required this.age,
     required this.date,
@@ -218,7 +266,7 @@ class ConsultationCardDetail extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    DetailConsultBtn()
+                    InputLinkBtn()
                   ],
                 ),
               ],
@@ -226,70 +274,6 @@ class ConsultationCardDetail extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class PackageCarousel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 180,
-        viewportFraction: 0.8,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enlargeCenterPage: true,
-        scrollDirection: Axis.horizontal,
-      ),
-      items: [
-        'assets/img/package1.jpg',
-        'assets/img/package2.jpg',
-      ].map((imagePath) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          },
-        );
-      }).toList(),
-    );
-  }
-}
-
-class NavIconButton extends StatelessWidget {
-  final String iconPath;
-  final Function()? onPressed;
-
-  const NavIconButton({
-    required this.iconPath,
-    required this.onPressed,
-    required String label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Image.asset(
-        iconPath,
-        width: 40,
-        height: 40,
-      ),
-      onPressed: onPressed,
     );
   }
 }

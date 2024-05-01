@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AddDoctorList extends StatelessWidget {
+class AddDoctorInformation extends StatelessWidget {
   bool isChecked = false;
 
   @override

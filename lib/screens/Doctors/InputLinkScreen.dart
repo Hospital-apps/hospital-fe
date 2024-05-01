@@ -24,10 +24,9 @@ class DetailMyAppointmentDoctor extends StatelessWidget {
                 status: 'Online Consult',
               ),
             ]),
-            Text('Notes'),
+            Text('Input Meeting Link'),
             TextFieldWidget(),
-            JoinMeetBtn(),
-            FinishBtn()
+            SubmitBtn()
           ],
         ),
       ),
@@ -122,6 +121,16 @@ class ConsultationCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SubmitBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text('Submit'),
     );
   }
 }
