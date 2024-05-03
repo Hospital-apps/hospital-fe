@@ -39,98 +39,39 @@ class DoctorScheduleState extends State<DoctorSchedule> {
   }
 }
 
-// class SelectDate extends StatefulWidget {
-//   @override
-//   _SelectDateState createState() => _SelectDateState();
-// }
-
-// class _SelectDateState extends State<SelectDate> {
-//   late DateTime selectedDate;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     selectedDate = DateTime.now();
-//   }
-
-//   Future<void> _selectDate(BuildContext context) async {
-//     final DateTime? pickedDate = await showDatePicker(
-//       context: context,
-//       initialDate: selectedDate,
-//       firstDate: DateTime(2000),
-//       lastDate: DateTime(2101),
-//     );
-//     if (pickedDate != null && pickedDate != selectedDate) {
-//       setState(() {
-//         selectedDate = pickedDate;
-//       });
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       children: [
-//         // Background Container
-//         Container(
-//           decoration: BoxDecoration(
-//             color: Colors.grey[200],
-//             borderRadius: BorderRadius.circular(10),
-//           ),
-//           width: 300,
-//           height: 50,
-//         ),
-//         Positioned(
-//           top: 20,
-//           left: 20,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     'Date',
-//                     style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 15,
-//                     ),
-//                   ),
-//                   SizedBox(width: 10),
-//                   TextButton(
-//                     onPressed: () => _selectDate(context),
-//                     child: Text(
-//                       "${selectedDate.toLocal()}".split(' ')[0],
-//                       style: TextStyle(
-//                         fontWeight: FontWeight.bold,
-//                         fontSize: 15,
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class DoctorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          title: Text('Dr. John Doe'),
+          title: Text('dr. Jake Sim'),
           subtitle: Text('Pediatrician'),
         ),
         ListTile(
-          title: Text('Dr. Jane Smith'),
+          title: Text('dr. Heeseung Lee'),
           subtitle: Text('Cardiologist'),
         ),
-        // Tambahkan daftar dokter lain di sini sesuai kebutuhan
+        ListTile(
+          title: Text('dr. Jay Park'),
+          subtitle: Text('Dentist'),
+        ),
+        ListTile(
+          title: Text('dr. Sunghoon Park'),
+          subtitle: Text('General Practitioner'),
+        ),
+        ListTile(
+          title: Text('dr. Sunoo Kim'),
+          subtitle: Text('Dermatologist'),
+        ),
+        ListTile(
+          title: Text('dr. Jungwon Park'),
+          subtitle: Text('Obstetrician'),
+        ),
+        ListTile(
+          title: Text('dr. Niki'),
+          subtitle: Text('Surgeon'),
+        ),
       ],
     );
   }

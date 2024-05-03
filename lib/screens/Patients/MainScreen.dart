@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hospitalapps/screens/Patients/ConsultationScreen.dart';
 import 'package:hospitalapps/screens/Patients/DoctorScheduleScreen.dart';
 import 'package:hospitalapps/screens/Patients/MedCheckScreen.dart';
+import 'package:hospitalapps/screens/Patients/NotificationScreen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Hello, username!",
+                  "Hello, Soffie!",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -30,7 +31,13 @@ class MainScreen extends StatelessWidget {
                     color: Colors.red[500],
                     size: 30,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationList()),
+                    );
+                  },
                 )
               ],
             ),

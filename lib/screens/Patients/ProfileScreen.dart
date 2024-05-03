@@ -13,11 +13,11 @@ class Profile extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundImage: AssetImage('assets/img/avatar.jpg'),
+                backgroundImage: AssetImage('assets/img/profile.jpeg'),
               ),
               SizedBox(height: 20),
               Text(
-                "Your Full Name Here",
+                "Maria Christina R. Soffie K.",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -26,19 +26,19 @@ class Profile extends StatelessWidget {
               SizedBox(height: 10),
               UserInfoRow(
                 label: "Nickname:",
-                value: "your nickname here",
+                value: "Soffie",
               ),
               UserInfoRow(
                 label: "Email:",
-                value: "example@example.com",
+                value: "mariasoffie.17@gmail.com",
               ),
               UserInfoRow(
                 label: "Password:",
-                value: "+1234567890",
+                value: "soffie1234",
               ),
               UserInfoRow(
                 label: "Phone Number:",
-                value: "+1234567890",
+                value: "+8615895916522",
               ),
               UserInfoRow(
                 label: "Role:",
@@ -66,9 +66,9 @@ class UserInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 17, horizontal: 12),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
