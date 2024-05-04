@@ -81,7 +81,7 @@ class Consultation extends StatelessWidget {
                 )),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => print('Appointment created'),
+              onPressed: () => controller.createAppointment(),
               child: const Text('Make Appointment'),
             ),
           ],
