@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hospitalapps/controllers/RegisterController.dart';
 import 'package:hospitalapps/widgets/TextField.dart';
 
 class RegisterScreen extends StatelessWidget {
+  final RegisterController controller = Get.put(RegisterController());
+
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController roleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,17 +51,26 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Full Name'),
+                    CustomTextFormField(
+                        label: 'Full Name', controller: fullNameController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Nickname'),
+                    CustomTextFormField(
+                        label: 'Nickname', controller: nicknameController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Email'),
+                    CustomTextFormField(
+                        label: 'Email', controller: emailController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Phone Number'),
+                    CustomTextFormField(
+                        label: 'Phone Number',
+                        controller: phoneNumberController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Password', isPassword: true),
+                    CustomTextFormField(
+                        label: 'Password',
+                        isPassword: true,
+                        controller: passwordController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Role'),
+                    CustomTextFormField(
+                        label: 'Role', controller: roleController),
                   ],
                 ),
               ),
@@ -58,7 +78,16 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.register(
+                      fullName: fullNameController.text,
+                      nickname: nicknameController.text,
+                      email: emailController.text,
+                      phoneNumber: phoneNumberController.text,
+                      password: passwordController.text,
+                      role: roleController.text,
+                    );
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(

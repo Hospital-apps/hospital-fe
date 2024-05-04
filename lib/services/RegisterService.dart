@@ -1,27 +1,36 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterService {
   final Dio _dio = Dio();
 
-  Future<Map<String, dynamic>?> loginUser(String email, String password) async {
+  Future<bool> registerUser({
+    required String fullName,
+    required String nickname,
+    required String email,
+    required String phoneNumber,
+    required String password,
+    required String role,
+  }) async {
     try {
-      Response response = await _dio.post(
+      final response = await _dio.post(
         'http://10.0.2.2:3000/api/auth/register',
-        data: {"email": email, "password": password},
+        data: {
+          "fullName": fullName,
+          "nickname": nickname,
+          "email": email,
+          "phoneNumber": phoneNumber,
+          "password": password,
+          "role": role,
+        },
       );
 
-      if (response.statusCode == 200 && response.data['status'] == 200) {
-        String token = response.data['data']['token'];
-        String role = response.data['data']['role'];
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', token);
-        return {"loggedIn": true, "role": role};
+      if (response.statusCode == 200) {
+        return true;
       }
-      return {"loggedIn": false};
+      return false;
     } catch (e) {
       print(e);
-      return {"loggedIn": false};
+      return false;
     }
   }
 }
