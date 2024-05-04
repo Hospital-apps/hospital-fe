@@ -81,24 +81,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isPassword: true,
                         controller: passwordController),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(
-                        label: 'Role', controller: roleController),
-                    DropdownButton<String>(
-                      isExpanded: true,
-                      value: selectedRole,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedRole = newValue!;
-                        });
-                      },
-                      items: typeItems
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                    Obx(() => InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: 'Role', // Label for the dropdown
+                            border:
+                                OutlineInputBorder(), // Consistent border style
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: controller.selectedRole.value,
+                              onChanged: (String? newValue) {
+                                controller.selectedRole.value = newValue!;
+                              },
+                              items: typeItems.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
@@ -113,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       email: emailController.text,
                       phoneNumber: phoneNumberController.text,
                       password: passwordController.text,
-                      role: roleController.text,
+                      role: selectedRole,
                     );
                   },
                   child: Padding(

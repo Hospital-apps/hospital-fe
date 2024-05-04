@@ -4,7 +4,7 @@ import 'package:hospitalapps/services/RegisterService.dart';
 
 class RegisterController extends GetxController {
   RegisterService _registerService = RegisterService();
-
+  final RxString selectedRole = 'Pasien'.obs;
   void register({
     required String fullName,
     required String nickname,
