@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hospitalapps/controllers/tokenController.dart';
+import 'package:hospitalapps/models/Appointments.dart';
 
 class AppointmentService {
   final Dio _dio = Dio();
@@ -39,6 +40,26 @@ class AppointmentService {
     } catch (e) {
       print('Error creating appointment: $e');
       return false;
+    }
+  }
+
+  Future<List<Appointment>> fetchAppointments() async {
+    try {
+      await TokenManager.init();
+
+      String? token = TokenManager.getToken();
+
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      // Make the request
+      final response =
+          await _dio.get('http://10.0.2.2:3000/api/appointments/info');
+      return (response.data as List)
+          .map((data) => Appointment.fromJson(data))
+          .toList();
+    } catch (e) {
+      print('Error fetching appointments: $e');
+      return [];
     }
   }
 }

@@ -11,21 +11,21 @@ class MyAppointment extends StatelessWidget {
             SizedBox(height: 20),
             ConsultationCard(
               doctorName: 'dr. Jake Sim',
-              date: 'April 12, 2024',
+              day: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
             ConsultationCard(
               doctorName: 'dr. Heeseung Lee',
-              date: 'April 12, 2024',
+              day: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
             MedCheckCard(
               package: 'package 1',
-              date: 'April, 30th 2024',
+              day: 'April, 30th 2024',
             )
           ],
         ),
@@ -36,13 +36,13 @@ class MyAppointment extends StatelessWidget {
 
 class ConsultationCard extends StatelessWidget {
   final String doctorName;
-  final String date;
+  final String day;
   final String time;
   final String status;
 
   ConsultationCard({
     required this.doctorName,
-    required this.date,
+    required this.day,
     required this.time,
     required this.status,
   });
@@ -84,7 +84,7 @@ class ConsultationCard extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'Date: $date',
+                      'day: $day',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -118,11 +118,11 @@ class ConsultationCard extends StatelessWidget {
 
 class MedCheckCard extends StatelessWidget {
   final String package;
-  final String date;
+  final String day;
 
   MedCheckCard({
     required this.package,
-    required this.date,
+    required this.day,
   });
 
   @override
@@ -158,7 +158,7 @@ class MedCheckCard extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'Date: $date',
+                    'day: $day',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -175,10 +175,7 @@ class DetailConsultBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DetailConsultBtn()),
-        );
+        print('Detail Appointment');
       },
       child: Text('Detail'),
     );
@@ -190,10 +187,7 @@ class DetailMedCheckBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DetailMedCheckBtn()),
-        );
+        print('Detail Appointment');
       },
       child: Text('Detail'),
     );
