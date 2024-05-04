@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddDoctorInformation extends StatefulWidget {
-  const AddDoctorInformation({super.key});
+  const AddDoctorInformation({Key? key}) : super(key: key);
 
   @override
   State<AddDoctorInformation> createState() => _AddDoctorInfoState();
@@ -9,7 +9,8 @@ class AddDoctorInformation extends StatefulWidget {
 
 class _AddDoctorInfoState extends State<AddDoctorInformation> {
   String selectedSpecialist = 'Pediatric';
-  String selectedTime = '08.00 - 11.00';
+  List<String> selectedTime = ['08.00 - 11.00'];
+  List<bool> workDays = List.filled(7, false);
 
   final List<String> specialistItems = [
     'Pediatric',
@@ -29,8 +30,6 @@ class _AddDoctorInfoState extends State<AddDoctorInformation> {
     '13.00 - 16.00',
     '18.00 - 21.00',
   ];
-
-  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,123 +64,44 @@ class _AddDoctorInfoState extends State<AddDoctorInformation> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Monday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Tuesday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Wednesday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Thursday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Friday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Saturday'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text('Sunday'),
-                  ],
-                ),
+                for (int i = 0; i < 7; i++)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: workDays[i],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            workDays[i] = value!;
+                          });
+                        },
+                      ),
+                      Text(_getDayOfWeek(i)),
+                    ],
+                  ),
               ],
             ),
             SizedBox(height: 10),
             Text('Select Work Time',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            DropdownButton<String>(
-              isExpanded: true,
-              value: selectedTime,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedTime = newValue!;
-                });
-              },
-              items: timeItems.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (int i = 0; i < timeItems.length; i++)
+                  CheckboxListTile(
+                    title: Text(timeItems[i]),
+                    value: selectedTime.contains(timeItems[i]),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value!) {
+                          selectedTime.add(timeItems[i]);
+                        } else {
+                          selectedTime.remove(timeItems[i]);
+                        }
+                      });
+                    },
+                  ),
+              ],
             ),
             SizedBox(height: 10),
             ElevatedButton(
@@ -192,5 +112,26 @@ class _AddDoctorInfoState extends State<AddDoctorInformation> {
         ),
       ),
     );
+  }
+
+  String _getDayOfWeek(int index) {
+    switch (index) {
+      case 0:
+        return 'Monday';
+      case 1:
+        return 'Tuesday';
+      case 2:
+        return 'Wednesday';
+      case 3:
+        return 'Thursday';
+      case 4:
+        return 'Friday';
+      case 5:
+        return 'Saturday';
+      case 6:
+        return 'Sunday';
+      default:
+        return '';
+    }
   }
 }

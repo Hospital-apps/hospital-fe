@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MedicalCheckup extends StatefulWidget {
-  const MedicalCheckup({super.key});
+  const MedicalCheckup({Key? key}) : super(key: key);
 
   @override
   State<MedicalCheckup> createState() => MedCheckState();
@@ -30,17 +30,19 @@ class MedCheckState extends State<MedicalCheckup> {
     }
   }
 
-  bool isChecked = false;
+  bool isChecked1 = false;
+  bool isChecked2 = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Medical Checkup'),
-        ),
-        body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      appBar: AppBar(
+        title: Text('Medical Checkup'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,10 +60,11 @@ class MedCheckState extends State<MedicalCheckup> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Checkbox(
-                  value: isChecked,
+                  value: isChecked1,
                   onChanged: (bool? value) {
                     setState(() {
-                      isChecked = value!;
+                      isChecked1 = value!;
+                      if (isChecked1) isChecked2 = false;
                     });
                   },
                 ),
@@ -77,10 +80,11 @@ class MedCheckState extends State<MedicalCheckup> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Checkbox(
-                  value: isChecked,
+                  value: isChecked2,
                   onChanged: (bool? value) {
                     setState(() {
-                      isChecked = value!;
+                      isChecked2 = value!;
+                      if (isChecked2) isChecked1 = false;
                     });
                   },
                 ),
@@ -93,8 +97,10 @@ class MedCheckState extends State<MedicalCheckup> {
               height: 250,
             ),
             MakeAppointmentButton(),
-          ]),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
 
