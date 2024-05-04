@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:hospitalapps/controllers/tokenController.dart';
+import 'package:hospitalapps/screens/LoginScreen.dart';
 
 class ProfileDoctor extends StatelessWidget {
   @override
@@ -94,8 +98,11 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        print('Logout button pressed');
+      onPressed: () async {
+        await TokenManager.removeToken();
+
+        // Redirect to LoginScreen
+        Get.offAll(() => LoginScreen());
       },
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
