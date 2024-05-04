@@ -1,54 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hospitalapps/controllers/ProfileController.dart';
 
 class Profile extends StatelessWidget {
+  final ProfileController profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage('assets/img/profile.jpeg'),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Maria Christina R. Soffie K.",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+        child: Obx(() {
+          // Using Obx here to listen to changes
+          if (profileController.userProfile.isEmpty) {
+            return CircularProgressIndicator(); // Show loading indicator while data is being fetched
+          }
+          return Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage(
+                      'assets/img/profile.jpeg'), // Consider changing to network image if needed
                 ),
-              ),
-              SizedBox(height: 10),
-              UserInfoRow(
-                label: "Nickname:",
-                value: "Soffie",
-              ),
-              UserInfoRow(
-                label: "Email:",
-                value: "mariasoffie.17@gmail.com",
-              ),
-              UserInfoRow(
-                label: "Password:",
-                value: "soffie1234",
-              ),
-              UserInfoRow(
-                label: "Phone Number:",
-                value: "+8615895916522",
-              ),
-              UserInfoRow(
-                label: "Role:",
-                value: "Patient",
-              ),
-              SizedBox(height: 40),
-              LogoutButton(),
-            ],
-          ),
-        ),
+                SizedBox(height: 20),
+                Text(
+                  profileController.userProfile['fullName'] ?? 'N/A',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                UserInfoRow(
+                  label: "Nickname:",
+                  value: profileController.userProfile['nickname'] ?? 'N/A',
+                ),
+                UserInfoRow(
+                  label: "Email:",
+                  value: profileController.userProfile['email'] ?? 'N/A',
+                ),
+                UserInfoRow(
+                  label: "Phone Number:",
+                  value: profileController.userProfile['phoneNumber'] ?? 'N/A',
+                ),
+                UserInfoRow(
+                  label: "Role:",
+                  value: profileController.userProfile['role'] ?? 'N/A',
+                ),
+                SizedBox(height: 40),
+                LogoutButton(),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
