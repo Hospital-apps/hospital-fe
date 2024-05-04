@@ -6,8 +6,7 @@ import 'package:hospitalapps/models/Doctor.dart';
 class Consultation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.put(ConsultationController()); // Dependency injection
+    final controller = Get.put(ConsultationController());
 
     return Scaffold(
       appBar: AppBar(title: Text('Consultation Booking')),
