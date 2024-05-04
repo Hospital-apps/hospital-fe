@@ -72,11 +72,11 @@ class RegisterController extends GetxController {
     }
 
     // Validasi kata sandi harus memiliki minimal 1 angka, 1 huruf, dan 1 simbol
-    if (!_isValidPassword(password)) {
-      Get.snackbar('Invalid Password',
-          'Password must contain at least one digit, one letter, and one symbol');
-      return;
-    }
+    // if (!_isValidPassword(password)) {
+    //   Get.snackbar('Invalid Password',
+    //       'Password must contain at least one digit, one letter, and one symbol');
+    //   return;
+    // }
 
     bool result = await _registerService.registerUser(
       fullName: fullName,
@@ -109,9 +109,9 @@ class RegisterController extends GetxController {
     return RegExp(r'^[0-9]+$').hasMatch(phoneNumber);
   }
 
-  bool _isValidPassword(String password) {
-    // Minimal 8 karakter, minimal satu huruf, satu angka, dan satu karakter khusus
-    return RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-        .hasMatch(password);
-  }
+  // bool _isValidPassword(String password) {
+  //   // Minimal 8 karakter, minimal satu huruf, satu angka, dan satu karakter khusus
+  //   return RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+  //       .hasMatch(password);
+  // }
 }
