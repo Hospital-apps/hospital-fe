@@ -24,12 +24,12 @@ class RegisterService {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return true;
       }
       return false;
     } catch (e) {
-      print(e);
+      print('Registration Error: $e');
       return false;
     }
   }

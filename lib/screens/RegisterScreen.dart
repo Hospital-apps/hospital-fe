@@ -18,12 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
 
-  String selectedRole = 'Patient';
-
-  final List<String> typeItems = [
-    'Pasien',
-    'Dokter',
-  ];
+  String get selectedRole => controller.selectedRole.value;
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +85,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: DropdownButton<String>(
                               isExpanded: true,
                               value: controller.selectedRole.value,
-                              onChanged: (String? newValue) {
-                                controller.selectedRole.value = newValue!;
-                              },
-                              items: typeItems.map((String value) {
+                              onChanged: controller.changeSelectedRole,
+                              items: controller.roles.map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
