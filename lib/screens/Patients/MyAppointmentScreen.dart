@@ -175,7 +175,10 @@ class DetailConsultBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print('Detail Appointment');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailConsultBtn()),
+        );
       },
       child: Text('Detail'),
     );
@@ -187,7 +190,10 @@ class DetailMedCheckBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print('Detail Appointment');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailMedCheckBtn()),
+        );
       },
       child: Text('Detail'),
     );
