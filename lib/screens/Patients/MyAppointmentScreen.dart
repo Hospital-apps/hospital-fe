@@ -1,34 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hospitalapps/controllers/AppointmentController.dart';
 import 'package:hospitalapps/screens/Patients/DetailConsultScreen.dart';
 import 'package:hospitalapps/screens/Patients/DetailMedCheckScreen.dart';
 
 class MyAppointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AppointmentController appointmentController =
+        Get.put(AppointmentController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'dr. Jake Sim',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
+            Obx(() {
+              if (appointmentController.appointments.isEmpty) {
+                return Text("Loading appointments...");
+              }
+              return Column(
+                children: appointmentController.appointments.map((appointment) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ConsultationCard(
+                      doctorName: appointment.doctor.fullName,
+                      day: appointment.day,
+                      time: "${appointment.time}",
+                      status: appointment.status,
+                      appointmentId: appointment.id,
+                    ),
+                  );
+                }).toList(),
+              );
+            }),
             SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'dr. Heeseung Lee',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
+            // Example of a MedCheck card if relevant
             MedCheckCard(
-              package: 'package 1',
+              package: 'Package 1',
               date: 'April, 30th 2024',
-            )
+            ),
           ],
         ),
       ),
@@ -38,15 +50,17 @@ class MyAppointment extends StatelessWidget {
 
 class ConsultationCard extends StatelessWidget {
   final String doctorName;
-  final String date;
+  final String day;
   final String time;
   final String status;
+  final String appointmentId;
 
   ConsultationCard({
     required this.doctorName,
-    required this.date,
+    required this.day,
     required this.time,
     required this.status,
+    required this.appointmentId,
   });
 
   @override
@@ -69,44 +83,22 @@ class ConsultationCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.person_3_rounded,
-                  size: 50,
-                ),
+                Icon(Icons.person_3_rounded, size: 50),
                 SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      doctorName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+                    Text(doctorName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
                     SizedBox(height: 5),
-                    Text(
-                      'Date: $date',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
+                    Text('day: $day', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 5),
-                    Text(
-                      'Time: $time',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
+                    Text('Time: $time', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 5),
-                    Text(
-                      'Status: $status',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
+                    Text('Status: $status', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 10),
-                    DetailConsultBtn()
+                    _buildActionButton(status, appointmentId),
                   ],
                 ),
               ],
@@ -114,6 +106,38 @@ class ConsultationCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildActionButton(String status, String appointmentId) {
+    String buttonText = 'Detail';
+    VoidCallback? onPressed;
+
+    switch (status.toLowerCase()) {
+      case 'pending':
+        buttonText = 'Pending';
+        onPressed = null;
+        break;
+      case 'started':
+        buttonText = 'Detail';
+        onPressed = () {
+          Get.find<AppointmentController>()
+              .fetchAppointmentDetails(appointmentId);
+          Get.to(() => DetailConsultationScreen());
+        };
+        break;
+      case 'finished':
+        buttonText = 'Finished';
+        onPressed = null;
+        break;
+      default:
+        buttonText = 'Unknown';
+        onPressed = null;
+    }
+
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(buttonText),
     );
   }
 }

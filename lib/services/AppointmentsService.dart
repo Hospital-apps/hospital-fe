@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:hospitalapps/controllers/tokenController.dart';
 import 'package:hospitalapps/models/Appointments.dart';
+import 'package:hospitalapps/models/AppointmentsDetail.dart';
 
 class AppointmentService {
   final Dio _dio = Dio();
@@ -45,13 +48,9 @@ class AppointmentService {
 
   Future<List<Appointment>> fetchAppointments() async {
     try {
-      await TokenManager.init();
-
       String? token = TokenManager.getToken();
-
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
-      // Make the request
       final response =
           await _dio.get('http://10.0.2.2:3000/api/appointments/info');
       return (response.data as List)
@@ -61,5 +60,49 @@ class AppointmentService {
       print('Error fetching appointments: $e');
       return [];
     }
+  }
+
+  Future<Appointment> getAppointmentDetails(String id) async {
+    try {
+      String? token = TokenManager.getToken();
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      final response =
+          await _dio.get('http://10.0.2.2:3000/api/appointments/details/$id');
+      if (response.statusCode == 200) {
+        return Appointment.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load appointment details');
+      }
+    } catch (e) {
+      print('Error fetching appointment details: $e');
+      throw Exception('Failed to fetch appointment details');
+    }
+  }
+
+  Future<Appointment?> fetchAppointmentDetails(String appointmentId) async {
+    try {
+      String? token = TokenManager.getToken();
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      final response = await _dio
+          .get('http://10.0.2.2:3000/api/appointments/details/$appointmentId');
+
+      print('Data Type: ${response.data.runtimeType}');
+      print('Data: $response.data');
+
+      if (response.statusCode == 200) {
+        var data = response.data;
+        if (data is String) {
+          data = json.decode(data);
+        }
+        return Appointment.fromJson(data);
+      } else {
+        print('Failed to load details: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching appointment details: $e');
+    }
+    return null;
   }
 }

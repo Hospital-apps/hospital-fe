@@ -1,28 +1,40 @@
-class Appointment {
+class AppointmentDetails {
   final String id;
+  final String patientId;
   final Doctor doctor;
+  final String specialty;
   final String time;
   final String day;
   final String status;
   final String type;
+  final String package;
+  final bool isApproved;
 
-  Appointment({
+  AppointmentDetails({
     required this.id,
+    required this.patientId,
     required this.doctor,
+    required this.specialty,
     required this.time,
     required this.day,
     required this.status,
     required this.type,
+    required this.package,
+    required this.isApproved,
   });
 
-  factory Appointment.fromJson(Map<String, dynamic> json) {
-    return Appointment(
+  factory AppointmentDetails.fromJson(Map<String, dynamic> json) {
+    return AppointmentDetails(
       id: json['_id'],
+      patientId: json['patientId'],
       doctor: Doctor.fromJson(json['doctorId']),
+      specialty: json['specialty'],
       time: json['time'],
       day: json['day'],
       status: json['status'],
       type: json['type'],
+      package: json['package'],
+      isApproved: json['isApproved'],
     );
   }
 }
