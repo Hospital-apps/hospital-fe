@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Patients/DetailConsultScreen.dart';
+import 'package:hospitalapps/screens/Patients/DetailMedCheckScreen.dart';
 
 class MyAppointment extends StatelessWidget {
   @override
@@ -11,21 +13,21 @@ class MyAppointment extends StatelessWidget {
             SizedBox(height: 20),
             ConsultationCard(
               doctorName: 'dr. Jake Sim',
-              day: 'April 12, 2024',
+              date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
             ConsultationCard(
               doctorName: 'dr. Heeseung Lee',
-              day: 'April 12, 2024',
+              date: 'April 12, 2024',
               time: '10:00 AM - 11:00 AM',
               status: 'Online Consult',
             ),
             SizedBox(height: 20),
             MedCheckCard(
               package: 'package 1',
-              day: 'April, 30th 2024',
+              date: 'April, 30th 2024',
             )
           ],
         ),
@@ -36,13 +38,13 @@ class MyAppointment extends StatelessWidget {
 
 class ConsultationCard extends StatelessWidget {
   final String doctorName;
-  final String day;
+  final String date;
   final String time;
   final String status;
 
   ConsultationCard({
     required this.doctorName,
-    required this.day,
+    required this.date,
     required this.time,
     required this.status,
   });
@@ -84,7 +86,7 @@ class ConsultationCard extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'day: $day',
+                      'Date: $date',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -118,11 +120,11 @@ class ConsultationCard extends StatelessWidget {
 
 class MedCheckCard extends StatelessWidget {
   final String package;
-  final String day;
+  final String date;
 
   MedCheckCard({
     required this.package,
-    required this.day,
+    required this.date,
   });
 
   @override
@@ -158,7 +160,7 @@ class MedCheckCard extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'day: $day',
+                    'Date: $date',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -175,7 +177,10 @@ class DetailConsultBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print('Detail Appointment');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailConsultationScreen()),
+        );
       },
       child: Text('Detail'),
     );
@@ -187,7 +192,10 @@ class DetailMedCheckBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print('Detail Appointment');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailMedCheckScreen()),
+        );
       },
       child: Text('Detail'),
     );
