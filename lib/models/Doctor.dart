@@ -1,57 +1,60 @@
-import 'dart:convert';
-
-List<Doctor> doctorFromJson(String str) =>
-    List<Doctor>.from(json.decode(str).map((x) => Doctor.fromJson(x)));
-
 class Doctor {
-  String id;
-  String fullName;
-  String specialty;
-  List<Schedule> schedule;
+  final String id;
+  final String fullName;
+  final String email;
+  final String phoneNumber;
+  final String specialty;
+  final List<Schedule> schedules;
 
   Doctor({
     required this.id,
     required this.fullName,
+    required this.email,
+    required this.phoneNumber,
     required this.specialty,
-    required this.schedule,
+    required this.schedules,
   });
 
-  factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
-        id: json["_id"],
-        fullName: json["fullName"],
-        specialty: json["specialty"],
-        schedule: List<Schedule>.from(
-            json["schedule"].map((x) => Schedule.fromJson(x))),
-      );
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+      id: json['_id'],
+      fullName: json['fullName'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      specialty: json['specialty'],
+      schedules: List<Schedule>.from(
+          json['schedule'].map((s) => Schedule.fromJson(s))),
+    );
+  }
 }
 
 class Schedule {
-  String day;
-  List<TimeSlot> timeSlots;
+  final String day;
+  final List<TimeSlot> timeSlots;
 
-  Schedule({
-    required this.day,
-    required this.timeSlots,
-  });
+  Schedule({required this.day, required this.timeSlots});
 
-  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
-        day: json["day"],
-        timeSlots: List<TimeSlot>.from(
-            json["timeSlots"].map((x) => TimeSlot.fromJson(x))),
-      );
+  factory Schedule.fromJson(Map<String, dynamic> json) {
+    return Schedule(
+      day: json['day'],
+      timeSlots: List<TimeSlot>.from(
+          json['timeSlots'].map((t) => TimeSlot.fromJson(t))),
+    );
+  }
 }
 
 class TimeSlot {
-  String start;
-  String end;
+  final String start;
+  final String end;
+  final String id;
 
-  TimeSlot({
-    required this.start,
-    required this.end,
-  });
+  TimeSlot({required this.start, required this.end, required this.id});
 
-  factory TimeSlot.fromJson(Map<String, dynamic> json) => TimeSlot(
-        start: json["start"],
-        end: json["end"],
-      );
+  factory TimeSlot.fromJson(Map<String, dynamic> json) {
+    return TimeSlot(
+      start: json['start'],
+      end: json['end'],
+      id: json['_id'],
+    );
+  }
 }

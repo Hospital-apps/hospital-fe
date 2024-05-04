@@ -3,37 +3,20 @@ import 'package:hospitalapps/models/Doctor.dart';
 import 'package:hospitalapps/services/DoctorService.dart';
 
 class DoctorController extends GetxController {
-  final DoctorService doctorService = DoctorService();
-  final RxList<Doctor> doctors = <Doctor>[].obs;
-  final Rx<Doctor?> selectedDoctor = Rx<Doctor?>(null);
-  final RxList<String> availableTimes = <String>[].obs;
+  var selectedDoctor = Rxn<Doctor>();
+  var selectedSchedule = Rxn<Schedule>();
+  var selectedTimeSlot = Rxn<TimeSlot>();
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchAndSetDoctors();
-  }
-
-  void fetchAndSetDoctors() async {
-    var fetchedDoctors = await doctorService.fetchDoctors();
-    if (fetchedDoctors.isNotEmpty) {
-      doctors.addAll(fetchedDoctors);
-      selectedDoctor.value = doctors.first;
-      updateAvailableTimes();
-    }
-  }
-
-  void changeSelectedDoctor(Doctor doctor) {
+  void selectDoctor(Doctor doctor) {
     selectedDoctor.value = doctor;
-    updateAvailableTimes();
+    selectedSchedule.value =
+        doctor.schedules.isNotEmpty ? doctor.schedules.first : null;
+    update();
   }
 
-  void updateAvailableTimes() {
-    availableTimes.clear();
-    selectedDoctor.value?.schedule.forEach((day) {
-      day.timeSlots.forEach((slot) {
-        availableTimes.add('${slot.start} - ${slot.end}');
-      });
-    });
+  void selectSchedule(Schedule schedule) {
+    selectedSchedule.value = schedule;
+    // Maybe you need to select a default time slot or clear previous selections
+    update();
   }
 }
