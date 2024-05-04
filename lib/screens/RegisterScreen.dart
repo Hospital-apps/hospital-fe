@@ -3,7 +3,12 @@ import 'package:get/get.dart';
 import 'package:hospitalapps/controllers/RegisterController.dart';
 import 'package:hospitalapps/widgets/TextField.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final RegisterController controller = Get.put(RegisterController());
 
   final TextEditingController fullNameController = TextEditingController();
@@ -12,6 +17,13 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
+
+  String selectedRole = 'Patient';
+
+  final List<String> typeItems = [
+    'Pasien',
+    'Dokter',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +83,22 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: 16.0),
                     CustomTextFormField(
                         label: 'Role', controller: roleController),
+                    DropdownButton<String>(
+                      isExpanded: true,
+                      value: selectedRole,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedRole = newValue!;
+                        });
+                      },
+                      items: typeItems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               ),
