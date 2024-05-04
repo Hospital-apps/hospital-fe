@@ -83,9 +83,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 16.0),
                     Obx(() => InputDecorator(
                           decoration: InputDecoration(
-                            labelText: 'Role', // Label for the dropdown
-                            border:
-                                OutlineInputBorder(), // Consistent border style
+                            labelText: 'Role',
+                            border: OutlineInputBorder(),
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
