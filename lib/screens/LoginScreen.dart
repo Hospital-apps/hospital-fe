@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:hospitalapps/controllers/LoginController.dart';
 import 'package:hospitalapps/screens/Doctors/HomeScreenDoctor.dart';
 import 'package:hospitalapps/screens/Patients/HomeScreen.dart';
 import 'package:hospitalapps/screens/RegisterScreen.dart';
 import 'package:hospitalapps/widgets/TextField.dart';
 
 class LoginScreen extends StatelessWidget {
+  final LoginController controller = Get.put(LoginController());
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +49,16 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Email'),
+                    CustomTextFormField(
+                      label: 'Email',
+                      controller: emailController,
+                    ),
                     SizedBox(height: 16.0),
-                    CustomTextFormField(label: 'Password', isPassword: true),
+                    CustomTextFormField(
+                      label: 'Password',
+                      isPassword: true,
+                      controller: passwordController,
+                    ),
                   ],
                 ),
               ),
@@ -54,10 +67,8 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
+                    controller.loginUser(
+                        emailController.text, passwordController.text);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
