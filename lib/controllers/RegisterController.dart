@@ -39,6 +39,19 @@
 //   }
 // }
 
+// Validasi kata sandi harus memiliki minimal 1 angka, 1 huruf, dan 1 simbol
+// if (!_isValidPassword(password)) {
+//   Get.snackbar('Invalid Password',
+//       'Password must contain at least one digit, one letter, and one symbol');
+//   return;
+// }
+
+// bool _isValidPassword(String password) {
+//   // Minimal 8 karakter, minimal satu huruf, satu angka, dan satu karakter khusus
+//   return RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+//       .hasMatch(password);
+// }
+
 import 'package:get/get.dart';
 import 'package:hospitalapps/screens/LoginScreen.dart';
 import 'package:hospitalapps/services/RegisterService.dart';
@@ -58,25 +71,18 @@ class RegisterController extends GetxController {
   }) async {
     String rolesend = role.toLowerCase();
 
-    // Validasi email
+    // Email Validation
     if (!_isValidEmail(email)) {
       Get.snackbar('Invalid Email', 'Please enter a valid email address');
       return;
     }
 
-    // Validasi nomor telepon harus berisi hanya angka
+    // Phone Number Validation
     if (!_isValidPhoneNumber(phoneNumber)) {
       Get.snackbar(
           'Invalid Phone Number', 'Please enter numbers only for phone number');
       return;
     }
-
-    // Validasi kata sandi harus memiliki minimal 1 angka, 1 huruf, dan 1 simbol
-    // if (!_isValidPassword(password)) {
-    //   Get.snackbar('Invalid Password',
-    //       'Password must contain at least one digit, one letter, and one symbol');
-    //   return;
-    // }
 
     bool result = await _registerService.registerUser(
       fullName: fullName,
@@ -108,10 +114,4 @@ class RegisterController extends GetxController {
   bool _isValidPhoneNumber(String phoneNumber) {
     return RegExp(r'^[0-9]+$').hasMatch(phoneNumber);
   }
-
-  // bool _isValidPassword(String password) {
-  //   // Minimal 8 karakter, minimal satu huruf, satu angka, dan satu karakter khusus
-  //   return RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-  //       .hasMatch(password);
-  // }
 }
