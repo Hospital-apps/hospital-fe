@@ -65,51 +65,38 @@ class ConsultationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      elevation: 4,
+      shadowColor: Colors.grey.withOpacity(0.5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(doctorName,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            SizedBox(height: 4),
+            Text('Day: $day', style: TextStyle(fontSize: 16)),
+            SizedBox(height: 2),
+            Text('Time: $time', style: TextStyle(fontSize: 16)),
+            SizedBox(height: 2),
+            Text('Status: $status',
+                style: TextStyle(fontSize: 16, color: Colors.blue)),
+            SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: _buildActionButton(status, appointmentId, context),
             ),
-            width: double.infinity,
-            height: 200,
-          ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.person_3_rounded, size: 50),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(doctorName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18)),
-                    SizedBox(height: 5),
-                    Text('day: $day', style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 5),
-                    Text('Time: $time', style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 5),
-                    Text('Status: $status', style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 10),
-                    _buildActionButton(status, appointmentId),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildActionButton(String status, String appointmentId) {
+  Widget _buildActionButton(
+      String status, String appointmentId, BuildContext context) {
     String buttonText = 'Detail';
     VoidCallback? onPressed;
 
@@ -137,6 +124,10 @@ class ConsultationCard extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        onPrimary: Theme.of(context).colorScheme.onPrimary,
+        primary: Theme.of(context).primaryColor,
+      ),
       child: Text(buttonText),
     );
   }
@@ -153,46 +144,32 @@ class MedCheckCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      elevation: 4,
+      shadowColor: Colors.grey.withOpacity(0.5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              package,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
-            width: double.infinity,
-            height: 150,
-          ),
-          Positioned(
-              top: 20,
-              left: 20,
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Icon(
-                  Icons.assignment,
-                  size: 50,
-                ),
-                SizedBox(width: 10),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(
-                    package,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Date: $date',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  DetailMedCheckBtn()
-                ])
-              ]))
-        ]));
+            Text('Date: $date', style: TextStyle(fontSize: 16)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: DetailMedCheckBtn(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

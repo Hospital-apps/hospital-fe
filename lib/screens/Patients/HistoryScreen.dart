@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hospitalapps/controllers/HistoryController.dart';
 import 'package:hospitalapps/screens/Patients/ConsultationScreen.dart';
 import 'package:hospitalapps/screens/Patients/MedCheckScreen.dart';
 
 class HistoryScreen extends StatelessWidget {
+  final HistoryController historyController = Get.put(HistoryController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            ConsultationCard(
-              doctorName: 'dr. Jake Sim',
-              date: 'April 12, 2024',
-              time: '10:00 AM - 11:00 AM',
-              status: 'Online Consult',
+      // appBar: AppBar(title: Text('History')),
+      body: Obx(() {
+        if (historyController.isLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                ...historyController.historyList.map((history) {
+                  if (history.type.contains('Consultation')) {
+                    // Adjust logic based on actual types from API
+                    return ConsultationCard(
+                      doctorName: history.doctor.fullName,
+                      date: history.day, // Assuming 'day' contains the date
+                      time: history.time,
+                      status: history.status,
+                    );
+                  } else if (history.type.contains('MedCheck')) {
+                    return MedCheckCard(
+                      package: history.package,
+                      date: history.day, // Assuming 'day' contains the date
+                    );
+                  }
+                  return SizedBox.shrink(); // For unrecognized types
+                }).toList(),
+                SizedBox(height: 20),
+              ],
             ),
-            SizedBox(height: 20),
-            ConsultationCardPrescrip(
-              doctorName: 'dr. Heeseung Lee',
-              date: 'April 25th, 2024',
-              status: 'Online Consult',
-            ),
-            SizedBox(height: 20),
-            MedCheckCard(
-              package: 'package 1',
-              date: 'April, 30th 2024',
-            )
-          ],
-        ),
-      ),
+          );
+        }
+      }),
     );
   }
 }
@@ -51,67 +63,43 @@ class ConsultationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            width: double.infinity,
-            height: 200,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Card(
+        elevation: 4,
+        shadowColor: Colors.grey.withOpacity(0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.person_outline, size: 40),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(doctorName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18)),
+                        Text('Date: $date', style: TextStyle(fontSize: 16)),
+                        Text('Time: $time', style: TextStyle(fontSize: 16)),
+                        Text('Status: $status', style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ConsultAgainBtn(),
+              ),
+            ],
           ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.person_3_rounded,
-                  size: 50,
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      doctorName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Date: $date',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Time: $time',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Status: $status',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    ConsultAgainBtn(),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -131,60 +119,44 @@ class ConsultationCardPrescrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            width: double.infinity,
-            height: 200,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Card(
+        elevation: 4,
+        shadowColor: Colors.grey.withOpacity(0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.assignment_ind_outlined, size: 40),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          doctorName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        Text('Date: $date', style: TextStyle(fontSize: 16)),
+                        Text('Status: $status', style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ConsultAgainBtn(),
+              ),
+            ],
           ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.person_3_rounded,
-                  size: 50,
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      doctorName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Date: $date',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Status: $status',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    ConsultAgainBtn(),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -202,45 +174,36 @@ class MedCheckCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            width: double.infinity,
-            height: 150,
-          ),
-          Positioned(
-              top: 20,
-              left: 20,
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Icon(
-                  Icons.assignment,
-                  size: 50,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Card(
+        elevation: 4,
+        shadowColor: Colors.grey.withOpacity(0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(Icons.check_circle_outline, size: 40),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      package,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    Text('Date: $date', style: TextStyle(fontSize: 16)),
+                  ],
                 ),
-                SizedBox(width: 10),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(
-                    package,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Date: $date',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  MedCheckBtn()
-                ])
-              ]))
-        ]));
+              ),
+              MedCheckBtn(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -249,9 +212,17 @@ class ConsultAgainBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Consultation();
-        // print('Consult Again');
+        // Add actual navigation logic or function call
+        print('Consult Again');
       },
+      style: ElevatedButton.styleFrom(
+        primary:
+            Theme.of(context).primaryColor, // Use the theme's primary color
+        onPrimary: Theme.of(context).colorScheme.onPrimary, // Text color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+      ),
       child: Text('Consult Again'),
     );
   }
@@ -262,9 +233,16 @@ class MedCheckBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        MedicalCheckup();
-        // print('Consult Again');
+        // Add actual navigation logic or function call
+        print('Make Appointment Again');
       },
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).primaryColor,
+        onPrimary: Theme.of(context).colorScheme.onPrimary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
       child: Text('Make Appointment Again'),
     );
   }
