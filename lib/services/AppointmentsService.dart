@@ -62,15 +62,40 @@ class AppointmentService {
     }
   }
 
-  Future<Appointment> getAppointmentDetails(String id) async {
+  // Future<Appointment> getAppointmentDetails(String id) async {
+  //   try {
+  //     String? token = TokenManager.getToken();
+  //     _dio.options.headers['Authorization'] = 'Bearer $token';
+
+  //     final response =
+  //         await _dio.get('http://10.0.2.2:3000/api/appointments/details/$id');
+  //     if (response.statusCode == 200) {
+  //       return Appointment.fromJson(response.data);
+  //     } else {
+  //       throw Exception('Failed to load appointment details');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching appointment details: $e');
+  //     throw Exception('Failed to fetch appointment details');
+  //   }
+  // }
+
+  Future<AppointmentDetails?> fetchAppointmentDetails(
+      String appointmentId) async {
     try {
       String? token = TokenManager.getToken();
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
-      final response =
-          await _dio.get('http://10.0.2.2:3000/api/appointments/details/$id');
-      if (response.statusCode == 200) {
-        return Appointment.fromJson(response.data);
+      final response = await _dio
+          .get('http://10.0.2.2:3000/api/appointments/details/$appointmentId');
+      if (response.statusCode == 200 && response.data != null) {
+        var data =
+            response.data['data']; // Access the nested 'data' key directly
+        if (data != null) {
+          return AppointmentDetails.fromJson(data);
+        } else {
+          throw Exception("Data not found in response");
+        }
       } else {
         throw Exception('Failed to load appointment details');
       }
@@ -78,31 +103,5 @@ class AppointmentService {
       print('Error fetching appointment details: $e');
       throw Exception('Failed to fetch appointment details');
     }
-  }
-
-  Future<Appointment?> fetchAppointmentDetails(String appointmentId) async {
-    try {
-      String? token = TokenManager.getToken();
-      _dio.options.headers['Authorization'] = 'Bearer $token';
-
-      final response = await _dio
-          .get('http://10.0.2.2:3000/api/appointments/details/$appointmentId');
-
-      print('Data Type: ${response.data.runtimeType}');
-      print('Data: $response.data');
-
-      if (response.statusCode == 200) {
-        var data = response.data;
-        if (data is String) {
-          data = json.decode(data);
-        }
-        return Appointment.fromJson(data);
-      } else {
-        print('Failed to load details: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching appointment details: $e');
-    }
-    return null;
   }
 }

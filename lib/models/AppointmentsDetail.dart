@@ -1,7 +1,7 @@
 class AppointmentDetails {
   final String id;
   final String patientId;
-  final Doctor doctor;
+  final String doctor;
   final String specialty;
   final String time;
   final String day;
@@ -9,6 +9,7 @@ class AppointmentDetails {
   final String type;
   final String package;
   final bool isApproved;
+  final String linkGMeet;
 
   AppointmentDetails({
     required this.id,
@@ -19,22 +20,25 @@ class AppointmentDetails {
     required this.day,
     required this.status,
     required this.type,
-    required this.package,
+    this.package = '',
     required this.isApproved,
+    this.linkGMeet = '',
   });
 
   factory AppointmentDetails.fromJson(Map<String, dynamic> json) {
     return AppointmentDetails(
-      id: json['_id'],
-      patientId: json['patientId'],
-      doctor: Doctor.fromJson(json['doctorId']),
-      specialty: json['specialty'],
-      time: json['time'],
-      day: json['day'],
-      status: json['status'],
-      type: json['type'],
-      package: json['package'],
-      isApproved: json['isApproved'],
+      id: json['_id'] as String,
+      patientId: json['patientId'] as String,
+      doctor:
+          Doctor.fromJson(json['doctorId'] as Map<String, dynamic>).fullName,
+      specialty: json['specialty'] as String,
+      time: json['time'] as String,
+      day: json['day'] as String,
+      status: json['status'] as String,
+      type: json['type'] as String,
+      package: json['package'] as String? ?? '',
+      isApproved: json['isApproved'] == 'true',
+      linkGMeet: json['link_gmeet'] as String? ?? '',
     );
   }
 }
@@ -42,19 +46,13 @@ class AppointmentDetails {
 class Doctor {
   final String id;
   final String fullName;
-  final String specialty;
 
-  Doctor({
-    required this.id,
-    required this.fullName,
-    required this.specialty,
-  });
+  Doctor({required this.id, required this.fullName});
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
     return Doctor(
-      id: json['_id'],
-      fullName: json['fullName'],
-      specialty: json['specialty'],
+      id: json['_id'] as String,
+      fullName: json['fullName'] as String,
     );
   }
 }
