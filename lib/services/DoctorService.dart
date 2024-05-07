@@ -14,7 +14,8 @@ class DoctorService {
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
       // Make the request
-      final response = await _dio.get('http://10.0.2.2:3000/api/doctors');
+      final response =
+          await _dio.get('http://10.0.2.2:3000/api/doctorspesialty');
       return (response.data as List)
           .map((doc) => Doctor.fromJson(doc))
           .toList();
