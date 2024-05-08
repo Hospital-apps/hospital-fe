@@ -13,7 +13,7 @@ class HistoryService {
       String? token = TokenManager.getToken();
 
       _dio.options.headers['Authorization'] = 'Bearer $token';
-      var response = await _dio.get('http://10.0.2.2:3000/api/history/info');
+      var response = await _dio.get('http://10.24.250.2:3000/api/history/info');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         return data.map((item) => History.fromJson(item)).toList();

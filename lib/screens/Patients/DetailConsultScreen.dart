@@ -80,8 +80,8 @@ class DetailConsultationScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {}, // Implement your finish functionality here
             style: ElevatedButton.styleFrom(
-              primary: Colors.red,
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
             ),
             child: Text('Finish'),
           ),

@@ -15,7 +15,7 @@ class DoctorService {
 
       // Make the request
       final response =
-          await _dio.get('http://10.0.2.2:3000/api/doctorspesialty');
+          await _dio.get('http://10.24.250.2:3000/api/doctorspesialty');
       return (response.data as List)
           .map((doc) => Doctor.fromJson(doc))
           .toList();

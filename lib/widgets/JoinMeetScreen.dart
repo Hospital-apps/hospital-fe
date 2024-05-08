@@ -13,8 +13,8 @@ class JoinMeetBtn extends StatelessWidget {
       onPressed: () => _handlePress(context), // Updated to call _handlePress
       child: Text('Join Meet'),
       style: ElevatedButton.styleFrom(
-        primary: Colors.green,
-        onPrimary: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.green,
       ),
     );
   }

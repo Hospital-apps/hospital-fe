@@ -216,9 +216,8 @@ class ConsultAgainBtn extends StatelessWidget {
         print('Consult Again');
       },
       style: ElevatedButton.styleFrom(
-        primary:
-            Theme.of(context).primaryColor, // Use the theme's primary color
-        onPrimary: Theme.of(context).colorScheme.onPrimary, // Text color
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).primaryColor, // Text color
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Rounded corners
         ),
@@ -237,8 +236,8 @@ class MedCheckBtn extends StatelessWidget {
         print('Make Appointment Again');
       },
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).primaryColor,
-        onPrimary: Theme.of(context).colorScheme.onPrimary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

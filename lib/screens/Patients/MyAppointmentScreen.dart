@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hospitalapps/controllers/AppointmentController.dart';
@@ -9,42 +11,58 @@ class MyAppointment extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppointmentController appointmentController =
         Get.put(AppointmentController());
-
+    log('BUILD');
+    appointmentController.fetchAppointments();
+    final appointmentsList = appointmentController.appointments;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            Obx(() {
-              if (appointmentController.appointments.isEmpty) {
-                return Text("Loading appointments...");
-              }
-              return Column(
-                children: appointmentController.appointments.map((appointment) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: ConsultationCard(
-                      doctorName: appointment.doctor.fullName,
-                      day: appointment.day,
-                      time: "${appointment.time}",
-                      status: appointment.status,
-                      appointmentId: appointment.id,
-                    ),
-                  );
-                }).toList(),
+        body: ListView.builder(
+            itemCount: appointmentsList.length,
+            reverse: true,
+            itemBuilder: ((context, index) {
+              final appointment = appointmentsList[index];
+              return ConsultationCard(
+                doctorName: appointment.doctor.fullName,
+                day: appointment.day,
+                time: "${appointment.time}",
+                status: appointment.status,
+                appointmentId: appointment.id,
               );
-            }),
-            SizedBox(height: 20),
-            // Example of a MedCheck card if relevant
-            MedCheckCard(
-              package: 'Package 1',
-              date: 'April, 30th 2024',
-            ),
-          ],
-        ),
-      ),
-    );
+            }))
+        // SingleChildScrollView(
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       SizedBox(height: 20),
+        //       Obx(() {
+        //         if (appointmentController.appointments.isEmpty) {
+        //           return Text("Loading appointments...");
+        //         }
+        //         return Column(
+        //           children: appointmentController.appointments.map((appointment) {
+        //             return Padding(
+        //               padding: const EdgeInsets.only(bottom: 20),
+        //               child: ConsultationCard(
+        //                 doctorName: appointment.doctor.fullName,
+        //                 day: appointment.day,
+        //                 time: "${appointment.time}",
+        //                 status: appointment.status,
+        //                 appointmentId: appointment.id,
+        //               ),
+        //             );
+        //           }).toList(),
+        //         );
+        //       }),
+        //       SizedBox(height: 20),
+        //       // Example of a MedCheck card if relevant
+        //       MedCheckCard(
+        //         package: 'Package 1',
+        //         date: 'April, 30th 2024',
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
+        );
   }
 }
 
@@ -125,8 +143,8 @@ class ConsultationCard extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        onPrimary: Theme.of(context).colorScheme.onPrimary,
-        primary: Theme.of(context).primaryColor,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       child: Text(buttonText),
     );
