@@ -7,7 +7,7 @@ class LoginService {
   Future<Map<String, dynamic>?> loginUser(String email, String password) async {
     try {
       Response response = await _dio.post(
-        'http://10.24.250.2:3000/api/auth/login',
+        'http://10.0.2.2:3000/api/auth/login',
         data: {"email": email, "password": password},
       );
 

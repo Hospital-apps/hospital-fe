@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/screens/Patients/AmbulanceScreen.dart';
 import 'package:hospitalapps/screens/Patients/ConsultationScreen.dart';
 import 'package:hospitalapps/screens/Patients/DoctorScheduleScreen.dart';
 import 'package:hospitalapps/screens/Patients/MedCheckScreen.dart';
@@ -81,7 +82,8 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Consultation()),
+                      MaterialPageRoute(
+                          builder: (context) => AmbulanceScreen()),
                     );
                   },
                 ),

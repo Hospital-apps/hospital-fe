@@ -13,7 +13,7 @@ class RegisterService {
   }) async {
     try {
       final response = await _dio.post(
-        'http://10.24.250.2:3000/api/auth/register',
+        'http://10.0.2.2:3000/api/auth/register',
         data: {
           "fullName": fullName,
           "nickname": nickname,

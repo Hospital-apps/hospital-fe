@@ -24,7 +24,7 @@ class AppointmentService {
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
       final response = await _dio.post(
-        'http://10.24.250.2:3000/api/appointments',
+        'http://10.0.2.2:3000/api/appointments',
         data: {
           'patientId': patientId,
           'doctorId': doctorId,
@@ -54,7 +54,7 @@ class AppointmentService {
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
       final response =
-          await _dio.get('http://10.24.250.2:3000/api/appointments/info');
+          await _dio.get('http://10.0.2.2:3000/api/appointments/info');
       log(response.data.toString());
       return (response.data as List)
           .map((data) => Appointment.fromJson(data))
@@ -89,8 +89,8 @@ class AppointmentService {
       String? token = TokenManager.getToken();
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
-      final response = await _dio.get(
-          'http://10.24.250.2:3000/api/appointments/details/$appointmentId');
+      final response = await _dio
+          .get('http://10.0.2.2:3000/api/appointments/details/$appointmentId');
       if (response.statusCode == 200 && response.data != null) {
         var data =
             response.data['data']; // Access the nested 'data' key directly
@@ -105,6 +105,21 @@ class AppointmentService {
     } catch (e) {
       print('Error fetching appointment details: $e');
       throw Exception('Failed to fetch appointment details');
+    }
+  }
+
+  Future<void> updateAppointmentStatus(
+      String appointmentId, String status) async {
+    try {
+      Response response =
+          await _dio.put('/appointments/pasien/$appointmentId', data: {
+        'status': status,
+      });
+      print("Response data: ${response.data}");
+      return response.data;
+    } catch (e) {
+      print('Error updating appointment status: $e');
+      throw Exception('Failed to update appointment status');
     }
   }
 }

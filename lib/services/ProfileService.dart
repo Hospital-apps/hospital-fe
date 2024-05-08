@@ -15,7 +15,7 @@ class ProfileService {
 
     try {
       final response = await _dio.get(
-        'http://10.24.250.2:3000/api/profile',
+        'http://10.0.2.2:3000/api/profile',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
