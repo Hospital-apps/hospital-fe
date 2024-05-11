@@ -61,6 +61,7 @@ class MainScreenDoctor extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -133,9 +134,15 @@ class MainScreenDoctor extends StatelessWidget {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   },
@@ -173,7 +180,7 @@ class NavIconButton extends StatelessWidget {
             width: 40,
             height: 40,
           ),
-          SizedBox(height: 8), // Add some space between the icon and the label
+          SizedBox(height: 8),
           Text(
             label,
             style: TextStyle(
@@ -204,75 +211,85 @@ class ConsultationCardLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.all(20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.person_3_rounded,
+              size: 50,
             ),
-            width: double.infinity,
-            height: 250,
-          ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.person_3_rounded,
-                  size: 50,
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      patientName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    patientName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      age,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    age,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Date: $date',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Date: $date',
+                    style: TextStyle(
+                      fontSize: 16,
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Time: $time',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Time: $time',
+                    style: TextStyle(
+                      fontSize: 16,
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Status: $status',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Status: $status',
+                    style: TextStyle(
+                      fontSize: 16,
                     ),
-                    SizedBox(height: 10),
-                    InputLinkBtn()
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 10),
+                  InputLinkBtn()
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class InputLinkBtn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {},
+      child: Text(
+        'View Details',
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
