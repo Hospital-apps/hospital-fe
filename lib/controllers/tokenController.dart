@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenManager {
@@ -17,5 +19,17 @@ class TokenManager {
 
   static Future<void> removeToken() async {
     await _prefs?.remove('token');
+  }
+
+  static String? decodeToken(String token) {
+    List<String> parts = token.split('.');
+    if (parts.length != 3) {
+      return null;
+    }
+    String payload = parts[1];
+    String normalizedPayload = base64Url.normalize(payload);
+    Map<String, dynamic> decoded =
+        json.decode(utf8.decode(base64Url.decode(normalizedPayload)));
+    return decoded['_id'];
   }
 }

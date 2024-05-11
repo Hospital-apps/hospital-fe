@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospitalapps/controllers/ScheduleController.dart';
 
 class AddDoctorInformation extends StatefulWidget {
   const AddDoctorInformation({Key? key}) : super(key: key);
@@ -105,7 +106,24 @@ class _AddDoctorInfoState extends State<AddDoctorInformation> {
             ),
             SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () => print('Add Doctor Information Completed'),
+              onPressed: () async {
+                try {
+                  await ScheduleController().saveDoctorInformation(
+                    day: _getDayOfWeek(DateTime.now().weekday - 1),
+                    timeSlots: selectedTime.map((time) {
+                      List<String> parts = time.split(' - ');
+                      return {
+                        'start': parts[0],
+                        'end': parts[1],
+                      };
+                    }).toList(),
+                    specialty: selectedSpecialist,
+                  );
+                  print('Add Doctor Information Completed');
+                } catch (e) {
+                  print('Failed to save doctor information: $e');
+                }
+              },
               child: const Text('Save Information'),
             ),
           ],
