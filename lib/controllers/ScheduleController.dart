@@ -17,19 +17,19 @@ class ScheduleController {
         timeSlots: timeSlots,
         specialty: specialty,
       );
-      Get.snackbar(
-        'Success',
-        'Doctor information saved successfully',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      // Get.snackbar(
+      //   'Success',
+      //   'Doctor information saved successfully',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   duration: Duration(seconds: 3),
+      // );
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to save doctor information: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Failed to save doctor information: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   duration: Duration(seconds: 3),
+      // );
     }
   }
 }

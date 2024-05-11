@@ -46,96 +46,144 @@ class _AddDoctorInfoState extends State<AddDoctorInformation> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 20),
-            Text('Select Specialist',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            DropdownButton<String>(
-              isExpanded: true,
-              value: selectedSpecialist,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedSpecialist = newValue!;
-                });
-              },
-              items:
-                  specialistItems.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            SizedBox(height: 10),
-            Text('Select Work Days',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (int i = 0; i < 7; i++)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        value: workDays[i],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            workDays[i] = value!;
-                          });
-                        },
-                      ),
-                      Text(_getDayOfWeek(i)),
-                    ],
-                  ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Text('Select Work Time',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (int i = 0; i < timeItems.length; i++)
-                  CheckboxListTile(
-                    title: Text(timeItems[i]),
-                    value: selectedTime.contains(timeItems[i]),
-                    onChanged: (bool? value) {
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                'Select Specialist',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
+              ),
+              SizedBox(height: 10),
+              DropdownButton<String>(
+                isExpanded: true,
+                value: selectedSpecialist,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedSpecialist = newValue!;
+                  });
+                },
+                items: specialistItems
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Select Work Days',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
+              ),
+              SizedBox(height: 10),
+              Wrap(
+                spacing: 10,
+                children: List.generate(7, (index) {
+                  return FilterChip(
+                    label: Text(
+                      _getDayOfWeek(index),
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    selected: workDays[index],
+                    onSelected: (bool selected) {
                       setState(() {
-                        if (value!) {
-                          selectedTime.add(timeItems[i]);
+                        workDays[index] = selected;
+                      });
+                    },
+                    selectedColor: Colors.blue.withOpacity(0.5),
+                    checkmarkColor: Colors.white,
+                  );
+                }),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Select Work Time',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
+              ),
+              SizedBox(height: 10),
+              Wrap(
+                spacing: 10,
+                children: List.generate(timeItems.length, (index) {
+                  final time = timeItems[index];
+                  return FilterChip(
+                    label: Text(
+                      time,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    selected: selectedTime.contains(time),
+                    onSelected: (bool selected) {
+                      setState(() {
+                        if (selected) {
+                          selectedTime.add(time);
                         } else {
-                          selectedTime.remove(timeItems[i]);
+                          selectedTime.remove(time);
                         }
                       });
                     },
-                  ),
-              ],
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await ScheduleController().saveDoctorInformation(
-                    day: _getDayOfWeek(DateTime.now().weekday - 1),
-                    timeSlots: selectedTime.map((time) {
-                      List<String> parts = time.split(' - ');
-                      return {
-                        'start': parts[0],
-                        'end': parts[1],
-                      };
-                    }).toList(),
-                    specialty: selectedSpecialist,
+                    selectedColor: Colors.blue.withOpacity(0.5),
+                    checkmarkColor: Colors.white,
                   );
-                  print('Add Doctor Information Completed');
-                } catch (e) {
-                  print('Failed to save doctor information: $e');
-                }
-              },
-              child: const Text('Save Information'),
-            ),
-          ],
+                }),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await ScheduleController().saveDoctorInformation(
+                      day: _getDayOfWeek(DateTime.now().weekday - 1),
+                      timeSlots: selectedTime.map((time) {
+                        List<String> parts = time.split(' - ');
+                        return {
+                          'start': parts[0],
+                          'end': parts[1],
+                        };
+                      }).toList(),
+                      specialty: selectedSpecialist,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Doctor information saved successfully!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    print('Add Doctor Information Completed');
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Failed to save doctor information: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    print('Failed to save doctor information: $e');
+                  }
+                },
+                child: const Text('Save Information',
+                    style: TextStyle(fontSize: 18)),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      EdgeInsets.all(15)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
