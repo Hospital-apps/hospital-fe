@@ -15,6 +15,7 @@ class DoctorScheduleState extends State<DoctorSchedule> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Doctor Schedule'),
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -29,6 +30,8 @@ class DoctorScheduleState extends State<DoctorSchedule> {
                 decoration: InputDecoration(
                   labelText: 'Search Doctor',
                   border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[200],
                 ),
               ),
             ),
@@ -47,68 +50,51 @@ class DoctorList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Jake Sim'),
-            Text('Pedatric'),
-            Text('Monday, 08.00 - 11.00')
-          ],
+        _buildDoctorItem('dr. Jake Sim', 'Pedatric', 'Monday, 08.00 - 11.00'),
+        _buildDoctorItem(
+            'dr. Heeseung Lee', 'Cardiologist', 'Monday, 13.00 - 16.00'),
+        _buildDoctorItem('dr. Jay Park', 'Dentist', 'Tuesday, 18.00 - 21.00'),
+        _buildDoctorItem('dr. Sunghoon Park', 'General Practitioner',
+            'Friday, 08.00 - 11.00'),
+        _buildDoctorItem(
+            'dr. Sunoo Kim', 'Dermatologist', 'Wednesday, 13.00 - 16.00'),
+        _buildDoctorItem(
+            'dr. Jungwon Yang', 'Obstetrician', 'Sunday, 18.00 - 21.00'),
+        _buildDoctorItem('dr. Niki', 'Surgeon', 'Thursday, 08.00 - 11.00'),
+      ],
+    );
+  }
+
+  Widget _buildDoctorItem(String name, String specialization, String schedule) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Heeseung Lee'),
-            Text('Cardiologist'),
-            Text('Monday, 13.00 - 16.00')
-          ],
+        Text(
+          specialization,
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Colors.grey[700],
+          ),
         ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Jay Park'),
-            Text('Dentist'),
-            Text('Tuesday, 18.00 - 21.00')
-          ],
+        Text(
+          schedule,
+          style: TextStyle(
+            color: Colors.grey[600],
+          ),
         ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Sunghoon Park'),
-            Text('General Practitioner'),
-            Text('Friday, 08.00 - 11.00')
-          ],
+        SizedBox(height: 10),
+        Divider(
+          color: Colors.grey[400],
+          thickness: 1,
         ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Sunoo Kim'),
-            Text('Dermatologist'),
-            Text('Wednesday, 13.00 - 16.00')
-          ],
-        ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Jungwon Park'),
-            Text('Obstetrician'),
-            Text('Sunday, 18.00 - 21.00')
-          ],
-        ),
-        Divider(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dr. Niki'),
-            Text('Surgeon'),
-            Text('Thursday, 08.00 - 11.00')
-          ],
-        ),
+        SizedBox(height: 10),
       ],
     );
   }

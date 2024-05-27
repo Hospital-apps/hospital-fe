@@ -7,7 +7,7 @@ class ScheduleService {
   final Dio _dio = Dio();
 
   ScheduleService() {
-    _dio.options.baseUrl = 'http://10.0.2.2:3000/api/doctors/';
+    _dio.options.baseUrl = 'http://10.20.152.152:3000/api/doctors/';
   }
 
   Future<String?> getDoctorId() async {

@@ -212,8 +212,10 @@ class ConsultAgainBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // Add actual navigation logic or function call
-        print('Consult Again');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Consultation()),
+        );
       },
       style: ElevatedButton.styleFrom(
         foregroundColor: Theme.of(context).colorScheme.onPrimary,

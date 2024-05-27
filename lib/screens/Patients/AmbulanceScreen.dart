@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AmbulanceScreen extends StatelessWidget {
-  final String phoneNumber =
-      '+15895916522'; // Replace with your actual phone number
+  final String phoneNumber = '+15895916522';
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +32,8 @@ class AmbulanceScreen extends StatelessWidget {
                 label: Text('Contact via WhatsApp'),
                 onPressed: () => _launchWhatsApp(phoneNumber),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.green, // background (button) color
-                  onPrimary: Colors.white, // foreground (text/icon) color
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.green, // foreground (text/icon) color
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
               ),

@@ -18,13 +18,15 @@ class AppointmentService {
     required String status,
     required String type,
     required String package,
+    DateTime? date,
   }) async {
     try {
       String? token = TokenManager.getToken();
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
       final response = await _dio.post(
-        'http://10.0.2.2:3000/api/appointments',
+        'http://10.20.152.152:3000/api/appointments',
+        // 'http://172.20.10.2:3000/api/appointments',
         data: {
           'patientId': patientId,
           'doctorId': doctorId,
@@ -54,7 +56,7 @@ class AppointmentService {
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
       final response =
-          await _dio.get('http://10.0.2.2:3000/api/appointments/info');
+          await _dio.get('http://10.20.152.152:3000/api/appointments/info');
       log(response.data.toString());
       return (response.data as List)
           .map((data) => Appointment.fromJson(data))
@@ -89,8 +91,8 @@ class AppointmentService {
       String? token = TokenManager.getToken();
       _dio.options.headers['Authorization'] = 'Bearer $token';
 
-      final response = await _dio
-          .get('http://10.0.2.2:3000/api/appointments/details/$appointmentId');
+      final response = await _dio.get(
+          'http://10.20.152.152:3000/api/appointments/details/$appointmentId');
       if (response.statusCode == 200 && response.data != null) {
         var data =
             response.data['data']; // Access the nested 'data' key directly

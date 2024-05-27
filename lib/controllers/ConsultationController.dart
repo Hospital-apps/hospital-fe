@@ -97,3 +97,104 @@ class ConsultationController extends GetxController {
     }
   }
 }
+
+// class ConsultationController extends GetxController {
+//   final DoctorService doctorService = DoctorService();
+//   final AppointmentService _appointmentService = AppointmentService();
+
+//   var doctors = <Doctor>[].obs;
+//   var selectedDoctor = Rx<Doctor?>(null);
+//   var selectedDay = Rx<Schedule?>(null);
+//   var selectedTime = Rx<TimeSlot?>(null);
+//   var selectedType = 'Offline Consultation'.obs;
+//   var selectedDate = Rx<DateTime?>(null); // Tambahkan variabel selectedDate
+
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     fetchAndSetDoctors();
+//   }
+
+//   void fetchAndSetDoctors() async {
+//     var fetchedDoctors = await doctorService.fetchDoctors();
+//     if (fetchedDoctors.isNotEmpty) {
+//       doctors.value = fetchedDoctors;
+//       selectedDoctor.value = doctors.first;
+//       if (selectedDoctor.value!.schedules.isNotEmpty) {
+//         selectedDay.value = selectedDoctor.value!.schedules.first;
+//         if (selectedDay.value!.timeSlots.isNotEmpty) {
+//           selectedTime.value = selectedDay.value!.timeSlots.first;
+//         }
+//       }
+//     }
+//   }
+
+//   void changeSelectedDoctor(Doctor doctor) {
+//     selectedDoctor.value = doctor;
+//     if (doctor.schedules.isNotEmpty) {
+//       selectedDay.value = doctor.schedules.first;
+//       if (selectedDay.value!.timeSlots.isNotEmpty) {
+//         selectedTime.value = selectedDay.value!.timeSlots.first;
+//       } else {
+//         selectedTime.value = null;
+//       }
+//     } else {
+//       selectedDay.value = null;
+//       selectedTime.value = null;
+//     }
+//   }
+
+//   void changeSelectedDay(Schedule schedule) {
+//     selectedDay.value = schedule;
+//     if (schedule.timeSlots.isNotEmpty) {
+//       selectedTime.value = schedule.timeSlots.first;
+//     } else {
+//       selectedTime.value = null;
+//     }
+//   }
+
+//   void changeSelectedTime(TimeSlot timeSlot) {
+//     selectedTime.value = timeSlot;
+//   }
+
+//   void changeSelectedType(String type) {
+//     selectedType.value = type;
+//   }
+
+//   void changeSelectedDate(DateTime date) {
+//     selectedDate.value = date;
+//   }
+
+//   Future<void> createAppointment() async {
+//     String patientId = AuthUtils.getPatientId() ?? "";
+//     if (patientId.isEmpty) {
+//       Get.snackbar('Error', 'Authentication error, please login again.');
+//       return;
+//     }
+//     if (selectedTime.value == null ||
+//         selectedDay.value == null ||
+//         selectedDate.value == null) {
+//       Get.snackbar('Error', 'Please select a valid time, day, and date.');
+//       return;
+//     }
+//     bool result = await _appointmentService.createAppointment(
+//       patientId: patientId,
+//       doctorId: selectedDoctor.value!.id,
+//       specialty: selectedDoctor.value!.specialty,
+//       time: selectedDay.value!.timeSlots.first.start +
+//           ' - ' +
+//           selectedDay.value!.timeSlots.first.end,
+//       day: selectedDay.value!.day,
+//       date: selectedDate.value,
+//       status: 'pending',
+//       type: selectedType.value,
+//       package: '',
+//     );
+
+//     if (result) {
+//       Get.snackbar('Success', 'Appointment created successfully');
+//     } else {
+//       Get.snackbar('Error', 'Failed to create appointment');
+//     }
+//   }
+// }
